@@ -1,0 +1,60 @@
+utterance,intent
+Who are you?,who
+What is your name?,who
+May I know your name,who
+I would like to know your name,who
+Can you tell me your name,who
+I want to know your name,who
+I want to know about you,who
+Info about you,who
+about you,who
+Who created you?,created
+How was you created,created
+Can you tell me how you got created,created
+Who designed you,created
+who developed you,created
+I would like to the your developer,created
+Who is your developer,created
+How did you got created,created
+Can you please tell me how you got created,created
+Which developer created you,created
+what services do you offer,services
+How can you help me,services
+What services I can avail from you,services
+What are the uses of you,services
+advantages of using you,services
+Pros of using you,services
+What are the services that you offer for me,services
+How can you be some use of me,services
+what are the services that you provide for users,services
+Services provided,services
+Good morning,good-morning
+very good morning,good-morning
+Hey good morning,good-morning
+Hey there! Good Morning,good-morning
+Good afternoon,good-afternoon
+Very good afternoon,good-afternoon
+Hey good afternonn,good-afternoon
+Hey there! Good Afternoon,good-afternoon
+Good evening,good-evening
+Hey good evening,good-evening
+Hey there! Good evening,good-evening
+very good evening,good-evening
+what is your age,age
+how old are you?,age
+what's your age,age
+May I know your age,age
+Tell me your age,age
+Would you mind telling me your age,age
+Please let me know your age,age
+I want to know your age,age
+Please tell me how old are you,age
+what is your gender,gender
+please tell me your gender,gender
+To which gender do you belong,gender
+What gender do you belong,gender
+I want to know which gender you belongs to,gender
+Which sex you belong to,gender
+What is your sex?,gender
+I want to know your sex,gender
+Would you mind telling me your sex,gender
