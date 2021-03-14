@@ -206,7 +206,7 @@ body {
 }
 
 .message {
-  border-radius: 20px;
+  border-radius: 5px;
   padding: 8px 15px;
   margin-top: 5px;
   margin-bottom: 5px;
@@ -214,15 +214,28 @@ body {
   font: 14px;
 }
 
+/* .bot-message{
+  margin-left: 10px;
+} */
+
 .yours {
+  display: flex;
+  flex-direction: row;
   align-items: flex-start;
 }
 
 .yours .message {
   /* margin-right: 25%; */
-  margin: 0px;
+  margin-left: 10px;
   background-color: #eee;
   position: relative;
+  display: flex;
+  float: right;
+}
+
+.yours .message img{
+  width: 20px;
+  height: 20px;
 }
 
 .yours .message.last:before {
@@ -244,7 +257,7 @@ body {
   left: -10px;
   width: 10px;
   height: 20px;
-  background: white;
+  background: #eee;
   border-bottom-right-radius: 10px;
 }
 
