@@ -162,6 +162,7 @@ form .textarea textarea:focus::placeholder{
   /* float: right; */
   background: -webkit-linear-gradient(left, #a445b2, #fa4299);
   transition: all 0.3s ease;
+  margin-left: 20px;
 }
 
 .chat-box form .field button span{
