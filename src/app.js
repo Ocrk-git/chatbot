@@ -57,6 +57,26 @@ io.on('connection', (socket) => {
         // socket.emit('videoIframes', videoIframes)
     })
 
+    socket.on('telegramMessage', async ({ userMessage }, callback) => {
+        let pythonFile = __dirname + "/push_message.py"
+        let pythonModel = spawn('python', [pythonFile, userMessage])
+        pythonModel.stdout.on('data', (data) => {
+            console.log(data.toString(), "Data from python")
+            socket.emit('telegramMessage',data.toString())
+        })
+
+        pythonModel.stderr.on('data', (data) => {
+            console.error(`stderr: ${data}`);
+        });
+
+        pythonModel.on('close', (code) => {
+            console.log(`child process exited with code ${code}`);
+        });
+        // const videoIframes = await generateYoutubeVideos(userMessage)
+        // console.log("Videos in app.js",videoIframes)
+        // socket.emit('videoIframes', videoIframes)
+    })
+
 })
 
 

@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+    <title>Chat App V2</title>
+    <meta charset="utf-8">
+
+    <link rel="stylesheet" href="cross-channel.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+
+    <!-- Test -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css">
+
+    <link rel='stylesheet prefetch'
+        href='https://cdnjs.cloudflare.com/ajax/libs/owl-carousel/1.3.3/owl.carousel.min.css'>
+    <link rel='stylesheet prefetch' href='https://cdnjs.cloudflare.com/ajax/libs/owl-carousel/1.3.3/owl.theme.min.css'>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/owl-carousel/1.3.3/owl.carousel.min.js'></script>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+
+<body>
+    <style>
+        .owl-buttons {
+            display: none;
+        }
+
+        .owl-carousel:hover .owl-buttons {
+            display: block;
+        }
+
+        .owl-item {
+            text-align: center;
+        }
+
+        .owl-theme .owl-controls .owl-buttons div {
+            background: transparent;
+            color: #869791;
+            font-size: 30px;
+            line-height: 300px;
+            height: 80px;
+            margin: 0;
+            padding: 0px;
+            position: absolute;
+            top: 0;
+        }
+
+        .owl-theme .owl-controls .owl-buttons .owl-prev {
+            left: 0;
+            padding: 0px;
+            margin: 0px;
+        }
+
+        .owl-theme .owl-controls .owl-buttons .owl-next {
+            right: 0;
+            padding: 0px;
+            margin: 0px;
+        }
+    </style>
+    <input type="checkbox" id="click">
+    <label for="click">
+        <i class="fab fa-facebook-messenger"></i>
+        <i class="fas fa-times"></i>
+    </label>
+    <div class="wrapper">
+        <script id="widget-header" type="text/html">
+            <div class="head-text">
+                {{room}}</div>
+        </script>
+
+        <!-- Widget Header -->
+        <div id="widget-header" class="head-text">
+            <img src="https://png.pngtree.com/element_our/20190601/ourlarge/pngtree-robot-free-button-png-picture-image_1338309.jpg"
+                alt="bot">
+            Edith</div>
+
+        <!-- Chat Box -->
+        <div class="chat-box">
+            <div class="chat" id="chat-div">
+
+                <!-- Welcome Message -->
+                <div class="yours messages">
+                    <img src="https://png.pngtree.com/element_our/20190601/ourlarge/pngtree-robot-free-button-png-picture-image_1338309.jpg" alt="bot">
+                    <div class="message">
+                        <h5>Hello! I am Edith, your virtual assistant for Entiretyin. How can I help you?</h5>
+                    </div>
+                </div>
+
+                <!-- <div class="container">
+                    <div class="row">
+                        <div id="owl-example" class="owl-carousel">
+                            <div>
+                                <div class="card">
+                                    <iframe width="300" height="245"
+                                        src="https://www.youtube.com/embed/pHxz8l1iWU4"></iframe>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="card">
+                                    <iframe width="300" height="245" src="https://www.youtube.com/embed/pHxz8l1iWU4">
+                                    </iframe>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="card">
+                                    <iframe width="300" height="245" src="https://www.youtube.com/embed/pHxz8l1iWU4">
+                                    </iframe>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="card">
+                                    <iframe width="300" height="245" src="https://www.youtube.com/embed/pHxz8l1iWU4">
+                                    </iframe>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="card">
+                                    <iframe width="300" height="245" src="https://www.youtube.com/embed/pHxz8l1iWU4">
+                                    </iframe>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="card">
+                                    <iframe width="300" height="245" src="https://www.youtube.com/embed/pHxz8l1iWU4">
+                                    </iframe>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div> -->
+                <!-- <div class="mine messages">
+                    <div class="message">
+                        Great thanks!
+                    </div>
+                </div>
+                <div class="yours messages">
+                    <div class="message">
+                        Hello! I am your virtual assistant. How can I help you?
+                    </div>
+                </div>
+                <div class="mine messages">
+                    <div class="message">
+                        Great thanks!
+                    </div>
+                </div>
+                <div class="yours messages">
+                    <div class="message">
+                        Hello! I am your virtual assistant. How can I help you?
+                    </div>
+                </div>
+                <div class="mine messages">
+                    <div class="message">
+                        Great thanks!
+                    </div>
+                </div>
+                <div class="yours messages">
+                    <div class="message">
+                        Hello! I am your virtual assistant. How can I help you?
+                    </div>
+                </div>
+                <div class="mine messages">
+                    <div class="message">
+                        Great thanks!
+                    </div>
+                </div>
+                <div class="yours messages">
+                    <div class="message">
+                        Hello! I am your virtual assistant. How can I help you?
+                    </div>
+                </div>
+                <div class="mine messages">
+                    <div class="message">
+                        Great thanks!
+                    </div>
+                </div> -->
+                <div id="message-box"></div>
+
+                <!-- Message Templates -->
+
+                <!-- User Message -->
+                <script id="message-template" type="text/html">
+                    <div class="mine messages">
+                        <div class="message">
+                            <h5>{{message}}</h5>
+                        </div>
+                    </div>
+                </script>
+
+                <!-- Bot Message -->
+                <script id="bot-template" type="text/html">
+                    <div class="yours messages">
+                        <img src="https://png.pngtree.com/element_our/20190601/ourlarge/pngtree-robot-free-button-png-picture-image_1338309.jpg" alt="bot">
+                    <div class="message">
+                        <h5>{{message}}</h5>
+                    </div>
+                </div>
+                </script>
+
+                <!-- Youtube card -->
+
+                <script id="youtube-template" type="text/html">
+                <div>
+                    <div class="card">
+                        <iframe width="300" height="245" src={{videoIframe}}>
+                        </iframe>
+                    </div>
+                </div>
+            </script>
+
+                <!-- Not working -->
+                <!-- <script id="youtube-template" type="text/html">
+                    <div class="container">
+                        <div class="row">
+                            <div id="owl-example" class="owl-carousel">
+                                <div>
+                                    <div class="card">
+                                        <iframe width="300" height="245" src={{videoIframe}}>
+                                        </iframe>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </script> -->
+
+                <!-- Carousel of cards -->
+                <script id="carousel-template" type="text/html">
+                    <div class="container">
+                        <div class="row">
+                            <div id="owl-example" class="owl-carousel">
+                            </div>
+                        </div>
+                    </div>
+                </script>
+                <!-- <div class="desc-text">
+                Fill out the form to join a room and have fun</div> &#xe092;-->
+                <form id="message-form">
+                    <div class="field">
+                        <input id="message" type="text" placeholder="Type your message..." required>
+                        <button type="submit"><span style="align-items: center;"
+                                class="glyphicon">&#xe171;</span></button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <!-- <form id="message-form">
+            <div class="field">
+                <input id="message" type="text" placeholder="Message" required><button type="submit"><span
+                        style="align-items: center;" class="glyphicon">&#xe092;</span></button>
+            </div>
+        </form> -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mustache.js/3.0.1/mustache.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/qs/6.6.0/qs.min.js"></script>
+        <script src="/socket.io/socket.io.js"></script>
+        <script src="./cross-channel.js"></script>
+</body>
+
+</html>

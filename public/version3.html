@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="v3.css">
+    <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+
+<body>
+    <input type="checkbox" id="click">
+    <label for="click">
+        <i class="fab fa-facebook-messenger"></i>
+        <!-- <img src="https://cdn.yellowmessenger.com/6z2kqCtJ8pOr1611815647456.png" alt="logo"> -->
+        <i class="fas fa-times"></i>
+    </label>
+
+    <!-- bot - header - logo - title - description -->
+    <div class="wrapper">
+        <section class="header-Banner">
+            <div id="chatDetails">
+
+                <img class="icon" src="https://cdn.yellowmessenger.com/6z2kqCtJ8pOr1611815647456.png">
+
+                <div class="title">Amazon</div>
+                <div class="sub-title"> Work Hard. Have Fun. Make History.</div>
+        </section>
+
+        <!-- chat bot body - bot messages - user messages -->
+        <div id="chatBoxMainContainer" class="message-icons live-chat" style="height:calc(736px - 195px - 0px - 95px);">
+
+            <!-- bot message -->
+            <div id="chatBoxMain" class="row">
+                <div class="chat-message  from-them new first"><span class="from-icon"></span>
+                    <div class="">A very Good Morning to you from Amazon Hr assistance. How can I help you today?
+                        <br><br>Please log in to continue. <br></div>
+                </div>
+            </div>
+            <div class="timestamp-bot">Sun 07:44 PM</div>
+
+
+
+
+            <div id="chatOptions" class=""><button class="option" id="quick-reply-1">Fuck Off</button></div>
+            <div id="chatOptions" class=""><button class="option" id="quick-reply-2">Fuck Off</button></div>
+            <div id="chatOptions" class=""><button class="option" id="quick-reply-3">Fuck Off</button></div>
+
+
+
+            <script id="user-message" type="text/html">
+                <div class="chat-message from-me message-came new first">
+                    <div id="msg1615751223051">{{userMessage}}</div>
+                </div>
+            </script>
+
+
+
+        </div>
+
+        <!-- user type area -->
+
+        <div class="send-input">
+            <div class="send-input-form">
+                <form action="#" class="typing-area">
+                    <input type="text" placeholder="Type a message here...">
+                    <button><i class="fab fa-telegram-plane"></i></button>
+                </form>
+            </div>
+
+        </div>
+        <div class='powerd-by'>
+            <p><span>Black</span> Messenger</p>
+            <button><i class="fas fa-home"></i></button>
+        </div>
+
+
+    </div>
+</body>
+
+
+
+<script>
+    let qucikReply = document.querySelector('.chat-message')
+    let button = document.querySelector('.option')
+
+
+
+
+
+    button.onclick = function () {
+        const $messages = document.querySelector('#chatBoxMainContainer')
+        const $quickReplyTemplate = document.querySelector('#user-message').innerHTML
+        console.log('CLICKED')
+
+        const userMessage = document.getElementById('quick-reply').innerHTML
+        const html = Mustache.render($quickReplyTemplate, {
+            userMessage
+        })
+        $messages.insertAdjacentHTML('beforeend', html)
+        // $messageFormInput.value = ''
+        console.log(userMessage)
+    }
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mustache.js/3.0.1/mustache.min.js"></script>
+
+</html>
