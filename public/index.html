@@ -92,6 +92,12 @@
                         <h5>Hello! I am Edith, your virtual assistant for Entiretyin. How can I help you?</h5>
                     </div>
                 </div>
+                <div>
+                    <div id="chatOptions" class=""><button class="option" id="quick-reply-1" onclick="buttonClick(this.id)">Who are you?</button></div>
+                    <div id="chatOptions" class=""><button class="option" id="quick-reply-2" onclick="buttonClick(this.id)">What do you do?</button></div>
+                    <div id="chatOptions" class=""><button class="option" id="quick-reply-3" onclick="buttonClick(this.id)">What is your age?</button></div>
+                    <div id="chatOptions" class=""><button class="option" id="quick-reply-4" onclick="buttonClick(this.id)">What is your gender?</button></div>
+                </div>
 
                 <!-- <div class="container">
                     <div class="row">
@@ -201,6 +207,11 @@
                         <h5>{{message}}</h5>
                     </div>
                 </div>
+                </script>
+
+                <!-- Quick Replies Template -->
+                <script id="qr-template" type="text/html">
+                    <div id="chatOptions"><button class="option" id="quick-reply-1">Cool</button></div>
                 </script>
 
                 <!-- Youtube card -->

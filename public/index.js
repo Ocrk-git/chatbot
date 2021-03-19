@@ -53,8 +53,8 @@ $("#message-form").submit(function (e) {
 //Sockets
 
 //Rendering carousel of youtube videos
-socket.on('videoIframes',(videoIframes)=>{
-    
+socket.on('videoIframes', (videoIframes) => {
+
     // let container = document.createElement('div')
     // container.className = "container"
     // let row = document.createElement('div')
@@ -78,7 +78,7 @@ socket.on('videoIframes',(videoIframes)=>{
     //     })
     //     $messages.insertAdjacentHTML('beforeend', html)
     // });
-    const html = Mustache.render($youtubeCardTemplate,{
+    const html = Mustache.render($youtubeCardTemplate, {
         videoIframe: videoIframes[0]
     })
     $messages.insertAdjacentHTML('beforeend', html)
@@ -86,7 +86,7 @@ socket.on('videoIframes',(videoIframes)=>{
     // document.querySelector('#sidebar').innerHTML = html
 })
 
-socket.on('message',(message)=>{
+socket.on('message', (message) => {
     const html = Mustache.render($botMessageTemplate, {
         message
     })
@@ -109,3 +109,35 @@ $(document).ready(function () {
     });
 
 });
+
+
+// Handle Quick Reply
+// let button = document.querySelector('.option')
+
+buttonClick = function (qrId) {
+    let divsToHide = document.getElementsByClassName("option"); //divsToHide is an array
+    for(var i = 0; i < divsToHide.length; i++){
+        divsToHide[i].style.visibility = "hidden"; // or
+        divsToHide[i].style.display = "none"; // depending on what you're doing
+    }
+    const userMessage = document.getElementById(qrId).innerHTML
+    console.log(userMessage)
+    socket.emit('sendMessage', { userMessage }, (error) => {
+        if (error) {
+            return console.log(error)
+        }
+        console.log('Message Delivered!')
+    })
+    const html = Mustache.render($messageTemplate, {
+        message: userMessage
+    })
+    $messages.insertAdjacentHTML('beforeend', html)
+    $messageFormInput.value = ''
+    $messageFormInput.focus()
+
+    // const botHtml = Mustache.render($botMessageTemplate, {
+    //     message: "Hello! I am Edith, your virtual assistant. How can I help you?"
+    // })
+    // $messages.insertAdjacentHTML('beforeend', botHtml)
+    autoScroll()
+}

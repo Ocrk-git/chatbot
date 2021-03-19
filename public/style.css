@@ -315,4 +315,20 @@ body {
   padding: 2px 16px;
 }
 
-/* Carousel */
+/* Quick Reply */
+button.option {
+  padding: 5px 0px;
+  border: 1px solid rgb(209, 86, 148);
+  border-radius: 5px;
+  color:rgb(209, 86, 148);
+  margin: 0px 0px 10px 50px;
+  cursor: pointer;
+  background: rgba(255, 255, 255, 0.438);
+  font-size: 14px;
+  outline: none;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-family: botplatform-font, "Helvetica Neue", Helvetica, Arial, sans-serif;
+  position: relative;
+  width: 200px;
+}
