@@ -8,7 +8,7 @@ import pandas as pd
 
 message = sys.argv[1]
 path = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
-datasetPath = path + '/edited Smalltalk repo extra - Sheet1.csv'
+datasetPath = path + '/faq_bot_training.csv'
 df = pd.read_csv(datasetPath)
 
 # responses = {
