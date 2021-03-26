@@ -1,7 +1,7 @@
 import pandas as pd
 import numpy as np
 
-df = pd.read_csv('edited Smalltalk repo extra - Sheet1.csv')
+df = pd.read_csv('faq_bot_training.csv')
 
 from sklearn.model_selection import train_test_split
 
