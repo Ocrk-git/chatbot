@@ -5,6 +5,10 @@ journeys = {
             "prompt": [
                 {
                     "type": "text",
+                    "value": "Sure I can help you with that🙂"
+                },
+                {
+                    "type": "text",
                     "value": "Can you please tell me your name?"
                 }
             ],
@@ -16,9 +20,23 @@ journeys = {
                 {
                     "type": "text",
                     "value": "Please tell me your mobile number"
+                },
+                {
+                    "type": "text",
+                    "value": "This helps us to get to know about."
                 }
             ],
             "validator": "phoneValidator"
+        },
+        {
+            "stepName" : "ask-age",
+            "prompt": [
+                {
+                    "type": "text",
+                    "value": "Please provide us your age"
+                }
+            ],
+            "validator": null
         },
         {
             "stepName" : "ask-email",
