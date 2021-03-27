@@ -38,78 +38,20 @@ $("#message-form").submit(function (e) {
     }
 
     const userMessage = e.target.elements.message.value
-    try {
-        if (localStorage["context"] == "[]") {
-            console.log("Context in if",localStorage["context"])
-            socket.emit('sendMessage', { userMessage }, (error) => {
-                
-                if (error) {
-                    return console.log(error)
-                }
-                console.log('Message Delivered!')
-            })
-            let html = Mustache.render($messageTemplate, {
-                message: userMessage
-            })
-            $messages.insertAdjacentHTML('beforeend', html)
-            $messageFormInput.value = ''
-            $messageFormInput.focus()
-            localStorage.removeItem("context");
+    socket.emit('sendMessage', { userMessage }, (error) => {
+
+        if (error) {
+            return console.log(error)
         }
-        else {
-            console.log("Context in else",localStorage["context"])
-            const steps = JSON.parse(localStorage["context"])
-            console.log("Steps from context",steps)
-            console.log("Steps type",typeof steps)
-            // Create user message
-            let html = Mustache.render($messageTemplate, {
-                message: userMessage
-            })
-            $messages.insertAdjacentHTML('beforeend', html)
-            $messageFormInput.value = ''
-            $messageFormInput.focus()
-
-            let context = steps
-            socket.emit('sendMessage', { userMessage, context }, (error) => {
-
-                if (error) {
-                    return console.log(error)
-                }
-                console.log('Message Delivered!')
-            })
-
-            // Send bot message
-            // const botHtml = Mustache.render($botMessageTemplate, {
-            //     message: steps[0]
-            // })
-            // $messages.insertAdjacentHTML('beforeend', botHtml)
-            // $messageFormInput.value = ''
-
-            // steps.shift()
-            // console.log("Context creation")
-            // localStorage['context'] = JSON.stringify(steps);
-        }
-    }
-    catch (e) {
-        console.log("Local storage not found", e)
-        socket.emit('sendMessage', { userMessage }, (error) => {
-
-            if (error) {
-                return console.log(error)
-            }
-            console.log('Message Delivered!')
-        })
-        // Showing user message
-        const html = Mustache.render($messageTemplate, {
-            message: userMessage
-        })
-        $messages.insertAdjacentHTML('beforeend', html)
-        $messageFormInput.value = ''
-        $messageFormInput.focus()
-
-        // Showing bot response
-
-    }
+        console.log('Message Delivered!')
+    })
+    // Showing user message
+    const html = Mustache.render($messageTemplate, {
+        message: userMessage
+    })
+    $messages.insertAdjacentHTML('beforeend', html)
+    $messageFormInput.value = ''
+    $messageFormInput.focus()
     autoScroll()
 });
 
@@ -150,36 +92,11 @@ socket.on('videoIframes', (videoIframes) => {
 })
 
 socket.on('message', (message) => {
-
-    // Check if context is present
-    console.log(typeof message == 'object', typeof message)
-    try {
-        message = JSON.parse(message)
-        const html = Mustache.render($botMessageTemplate, {
-            message: message[0]
-        })
-        $messages.insertAdjacentHTML('beforeend', html)
-        $messageFormInput.value = ''
-        message.shift()
-        console.log("Message",message)
-        localStorage['context'] = JSON.stringify(message);
-    }
-    catch (e) {
-        const html = Mustache.render($botMessageTemplate, {
-            message
-        })
-        $messages.insertAdjacentHTML('beforeend', html)
-        $messageFormInput.value = ''
-        if(localStorage["context"] != "[]"){
-            let steps = localStorage["context"]
-            steps = JSON.parse(steps)
-            steps.shift()
-            localStorage["context"] = JSON.stringify(steps)
-        }
-        else{
-            localStorage.removeItem("context");
-        }
-    }
+    const html = Mustache.render($botMessageTemplate, {
+        message
+    })
+    $messages.insertAdjacentHTML('beforeend', html)
+    $messageFormInput.value = ''
     autoScroll()
 })
 

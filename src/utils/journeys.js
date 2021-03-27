@@ -1,4 +1,4 @@
-{
+journeys = {
     "raise-ticket": [
         {
             "stepName" : "ask-name",
@@ -64,3 +64,5 @@
         }
     ]
 }
+
+module.exports = journeys
