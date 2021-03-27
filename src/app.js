@@ -52,15 +52,21 @@ io.on('connection', (socket) => {
 
                 // Check if response is should be sent
                 if (currentStep == context.length - 2) {
-                    const validator = require(validatorsPath + '/' + context[currentStep]["validator"])
-                    const validatorResponse = await validator(userMessage)
-                    // console.log("Validator response of final step:",validatorResponse)
-                    if(validatorResponse.success){
+                    if (context[currentStep]["validator"] != null) {
+                        const validator = require(validatorsPath + '/' + context[currentStep]["validator"])
+                        const validatorResponse = await validator(userMessage)
+                        if (validatorResponse.success) {
+                            client.del(sender)
+                            socket.emit("message", context[context.length - 1]["response"][0]["value"])
+                        }
+                        else {
+                            socket.emit("message", validatorResponse.message)
+                        }
+                    }
+                    else {
+                        console.log("No validator found")
                         client.del(sender)
                         socket.emit("message", context[context.length - 1]["response"][0]["value"])
-                    }
-                    else{
-                        socket.emit("message", validatorResponse.message)
                     }
                 }
 
@@ -70,13 +76,17 @@ io.on('connection', (socket) => {
                         const validator = require(validatorsPath + '/' + context[currentStep]["validator"])
                         const validatorResponse = await validator(userMessage)
                         console.log("Validator Response:", validatorResponse.message)
-                        if(validatorResponse.success){
+                        if (validatorResponse.success) {
                             context[currentStep]["stepValue"] = validatorResponse.message
                             currentStep += 1
                             client.setex(sender, 3600, JSON.stringify({ journey, context, currentStep }))
-                            socket.emit("message", context[currentStep]["prompt"][0]["value"])
+                            //Multiple prompts
+                            let prompts = context[currentStep]["prompt"]
+                            prompts.forEach(prompt => {
+                                socket.emit("message", prompt["value"])
+                            });
                         }
-                        else{
+                        else {
                             socket.emit("message", validatorResponse.message)
                         }
                     }
@@ -85,7 +95,11 @@ io.on('connection', (socket) => {
                         context[currentStep]["stepValue"] = userMessage
                         currentStep += 1
                         client.setex(sender, 3600, JSON.stringify({ journey, context, currentStep }))
-                        socket.emit("message", context[currentStep]["prompt"][0]["value"])
+                        //Multiple prompts
+                        let prompts = context[currentStep]["prompt"]
+                        prompts.forEach(prompt => {
+                            socket.emit("message", prompt["value"])
+                        });
                     }
                 }
             }
@@ -105,7 +119,11 @@ io.on('connection', (socket) => {
                         let currentStep = 0
                         client.setex(sender, 3600, JSON.stringify({ 'journey': journeyDetails.journey, context, currentStep }));
                         console.log("Showing first step")
-                        socket.emit('message', context[currentStep].prompt[0].value)
+                        //Multiple prompts
+                        let prompts = context[currentStep]["prompt"]
+                        prompts.forEach(prompt => {
+                            socket.emit("message", prompt["value"])
+                        });
                     }
                     catch (e) {
                         socket.emit('message', data.toString())
