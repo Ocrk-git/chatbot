@@ -10,6 +10,7 @@ const server = http.createServer(app)
 const io = socketio(server)
 
 const publicDirectoryPath = path.join(__dirname, "../public")
+const validatorsPath = path.join(__dirname,"/validators")
 const port = process.env.PORT || 3000
 
 app.use(express.static(publicDirectoryPath))
