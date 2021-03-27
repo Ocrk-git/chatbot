@@ -7,7 +7,6 @@ const asyncForLoop = async function (array, callback) {
 }
 
 const generateYoutubeVideos = (searchQuery) => {
-    console.log("seach query",searchQuery)
     return new Promise(resolve=>{
         let videos = []
         let options = {

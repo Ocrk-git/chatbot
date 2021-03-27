@@ -1,39 +1,28 @@
 const express = require('express')
 const http = require('http')
 const path = require('path')
-const { send } = require('process')
 const socketio = require('socket.io')
-const spawn = require('child_process').spawn
+const redis = require('redis');
+const { pullIntent } = require('./getIntent')
+const journeys = require('./utils/journeys');
+const { send } = require('process');
 // const { generateYoutubeVideos } = require('./youtubeSeach')
 const app = express()
 const server = http.createServer(app)
 const io = socketio(server)
 
 const publicDirectoryPath = path.join(__dirname, "../public")
-const validatorsPath = path.join(__dirname,"/validators")
+const validatorsPath = path.join(__dirname, "/validators")
 const port = process.env.PORT || 3000
 
 app.use(express.static(publicDirectoryPath))
 
-app.get('/prediction', (req, res) => {
-    console.log("Python end point", req.query.message)
-    console.log("Python Path", __dirname + "/load_model.py")
-    let pythonFile = __dirname + "/load_model.py"
-    let pythonModel = spawn('python', [pythonFile, req.query.message])
-    pythonModel.stdout.on('data', (data) => {
-        console.log(data.toString(), "Data from python")
-        return res.send(data).status(200)
-    })
+const client = redis.createClient();
 
-    pythonModel.stderr.on('data', (data) => {
-        console.error(`stderr: ${data}`);
-        return res.send("Error").status(400)
-    });
-
-    pythonModel.on('close', (code) => {
-        console.log(`child process exited with code ${code}`);
-    });
-})
+// Print redis errors to the console
+client.on('error', (err) => {
+    console.log("Error " + err);
+});
 
 io.on('connection', (socket) => {
     const sender = socket.id
@@ -54,35 +43,94 @@ io.on('connection', (socket) => {
     }
     socket.emit('welcome', welcomeMessage)
 
-    socket.on('sendMessage', async ({ userMessage, context }, callback) => {
-        console.log(userMessage)
-        console.log("sender id", socket.id)
-        console.log("Context", context)
-        if (context && context != []) {
-            // context = JSON.parse(context)
-            socket.emit('message', context[0])
-        }
-        else {
-            let pythonFile = __dirname + "/load_model.py"
-            let pythonModel = spawn('python', [pythonFile, userMessage])
-            pythonModel.stdout.on('data', (data) => {
-                console.log(data.toString(), "Data from python")
-                socket.emit('message', data.toString())
-            })
+    socket.on('sendMessage', ({ userMessage }, callback) => {
+        client.get(sender, async (err, result) => {
+            if (result) {
+                result = JSON.parse(result)
+                console.log("Context found", result)
+                let { currentStep, journey, context } = result
 
-            pythonModel.stderr.on('data', (data) => {
-                console.error(`stderr: ${data}`);
-            });
+                // Check if response is should be sent
+                if (currentStep == context.length - 2) {
+                    const validator = require(validatorsPath + '/' + context[currentStep]["validator"])
+                    const validatorResponse = await validator(userMessage)
+                    // console.log("Validator response of final step:",validatorResponse)
+                    if(validatorResponse.success){
+                        client.del(sender)
+                        socket.emit("message", context[context.length - 1]["response"][0]["value"])
+                    }
+                    else{
+                        socket.emit("message", validatorResponse.message)
+                    }
+                }
 
-            pythonModel.on('close', (code) => {
-                console.log(`child process exited with code ${code}`);
-            });
-        }
-        // const videoIframes = await generateYoutubeVideos(userMessage)
-        // console.log("Videos in app.js",videoIframes)
-        // socket.emit('videoIframes', videoIframes)
+                // Executing step validators
+                else {
+                    if (context[currentStep]["validator"] != null) {
+                        const validator = require(validatorsPath + '/' + context[currentStep]["validator"])
+                        const validatorResponse = await validator(userMessage)
+                        console.log("Validator Response:", validatorResponse.message)
+                        if(validatorResponse.success){
+                            context[currentStep]["stepValue"] = validatorResponse.message
+                            currentStep += 1
+                            client.setex(sender, 3600, JSON.stringify({ journey, context, currentStep }))
+                            socket.emit("message", context[currentStep]["prompt"][0]["value"])
+                        }
+                        else{
+                            socket.emit("message", validatorResponse.message)
+                        }
+                    }
+                    else {
+                        console.log("No validator found")
+                        context[currentStep]["stepValue"] = userMessage
+                        currentStep += 1
+                        client.setex(sender, 3600, JSON.stringify({ journey, context, currentStep }))
+                        socket.emit("message", context[currentStep]["prompt"][0]["value"])
+                    }
+                }
+            }
+
+            // Context not found - Executing model to get response
+            else {
+                console.log(userMessage)
+                console.log("sender id", sender)
+                try {
+                    // Get intent/small talk response from ML Model
+                    const data = await pullIntent(userMessage)
+
+                    // Check if intent object is present
+                    try {
+                        let journeyDetails = JSON.parse(data)
+                        let context = journeys[journeyDetails.journey]
+                        let currentStep = 0
+                        client.setex(sender, 3600, JSON.stringify({ 'journey': journeyDetails.journey, context, currentStep }));
+                        console.log("Showing first step")
+                        socket.emit('message', context[currentStep].prompt[0].value)
+                    }
+                    catch (e) {
+                        socket.emit('message', data.toString())
+                    }
+                }
+
+                // Sending small talk response to the user
+                catch (e) {
+                    console.log("error while fetching data from python file")
+                    socket.emit('message', "I am facing a technical issue. Please try later")
+                }
+            }
+        })
     })
 
+    // Deleting sender's context on disconnect
+    socket.on('disconnect', () => {
+        try {
+            client.del(sender)
+            console.log(`Deleting context for sender ${sender}`)
+        }
+        catch (e) {
+            console.log("Error", e)
+        }
+    })
 })
 
 
