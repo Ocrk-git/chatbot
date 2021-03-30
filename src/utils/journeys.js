@@ -18,8 +18,8 @@ journeys = {
             "stepName" : "ask-phone",
             "prompt": [
                 {
-                    "type": "text",
-                    "value": "Please tell me your mobile number"
+                    "type": "function",
+                    "value": "mobilePrompt"
                 },
                 {
                     "type": "text",

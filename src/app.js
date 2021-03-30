@@ -10,14 +10,20 @@ const { send } = require('process');
 const app = express()
 const server = http.createServer(app)
 const io = socketio(server)
+// const { app, server, io, sendTextMessage} = require('./utils/sendingMessage')
+
+const sendMessage = require('./utils/sendMessage');
+
 
 const publicDirectoryPath = path.join(__dirname, "../public")
 const validatorsPath = path.join(__dirname, "/validators")
+const promptPath = path.join(__dirname, "/prompts")
 const port = process.env.PORT || 3000
 
 app.use(express.static(publicDirectoryPath))
 
-const client = redis.createClient();
+const client = require('./utils/context.js');
+const { dirname } = require('path');
 
 // Print redis errors to the console
 client.on('error', (err) => {
@@ -25,6 +31,10 @@ client.on('error', (err) => {
 });
 
 io.on('connection', (socket) => {
+    // const dummy = require('../')
+    console.log(socket)
+    const {sendTextMessage} = require('./utils/sendingMessage')
+    sendTextMessage(socket)
     const sender = socket.id
     console.log("new web socket connection", sender)
     const welcomeMessage = {
@@ -72,6 +82,9 @@ io.on('connection', (socket) => {
 
                 // Executing step validators
                 else {
+                    // const prompt = require(promptPath+'/mobilePrompt.js')
+                    // const promptContext = await prompt(sender)
+                    // console.log(promptContext,'context prompt')
                     if (context[currentStep]["validator"] != null) {
                         const validator = require(validatorsPath + '/' + context[currentStep]["validator"])
                         const validatorResponse = await validator(userMessage)
@@ -82,8 +95,11 @@ io.on('connection', (socket) => {
                             client.setex(sender, 3600, JSON.stringify({ journey, context, currentStep }))
                             //Multiple prompts
                             let prompts = context[currentStep]["prompt"]
-                            prompts.forEach(prompt => {
-                                socket.emit("message", prompt["value"])
+                            prompts.forEach(async prompt => {
+                                const toSendMessage = await sendMessage(prompt,sender)
+                                console.log('send message from for each',toSendMessage)
+                                socket.emit("message", toSendMessage)
+                                // socket.emit("message", prompt["value"])
                             });
                         }
                         else {
@@ -97,8 +113,12 @@ io.on('connection', (socket) => {
                         client.setex(sender, 3600, JSON.stringify({ journey, context, currentStep }))
                         //Multiple prompts
                         let prompts = context[currentStep]["prompt"]
-                        prompts.forEach(prompt => {
-                            socket.emit("message", prompt["value"])
+                        prompts.forEach(async prompt => {
+                            const toSendMessage = await sendMessage(prompt,sender)
+                            console.log('send message from for each',toSendMessage)
+                            socket.emit("message", toSendMessage)
+
+                            // socket.emit("message", prompt["value"])
                         });
                     }
                 }
@@ -121,8 +141,11 @@ io.on('connection', (socket) => {
                         console.log("Showing first step")
                         //Multiple prompts
                         let prompts = context[currentStep]["prompt"]
-                        prompts.forEach(prompt => {
-                            socket.emit("message", prompt["value"])
+                        prompts.forEach(async prompt => {
+                            const toSendMessage = await sendMessage(prompt,sender)
+                            console.log('send message from for loop',toSendMessage)
+                            socket.emit("message", toSendMessage)
+                            // socket.emit("message", prompt["value"])
                         });
                     }
                     catch (e) {
