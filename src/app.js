@@ -67,7 +67,23 @@ io.on('connection', (socket) => {
                         const validatorResponse = await validator(userMessage)
                         if (validatorResponse.success) {
                             client.del(sender)
-                            socket.emit("message", context[context.length - 1]["response"][0]["value"])
+                            let response = context[context.length - 1]["response"]
+                            response.forEach(responseObject => {
+                                if (responseObject.type == 'text') {
+                                    socket.emit("message", responseObject["value"])
+                                }
+                                else {
+                                    let context = journeys[responseObject.value]
+                                    let currentStep = 0
+                                    client.setex(sender, 3600, JSON.stringify({ 'journey': responseObject.value, context, currentStep }));
+                                    console.log("Showing first step")
+                                    //Multiple prompts
+                                    let prompts = context[currentStep]["prompt"]
+                                    prompts.forEach(prompt => {
+                                        socket.emit("message", prompt["value"])
+                                    });
+                                }
+                            })
                         }
                         else {
                             socket.emit("message", validatorResponse.message)
