@@ -18,8 +18,8 @@ journeys = {
             "stepName" : "ask-phone",
             "prompt": [
                 {
-                    "type": "text",
-                    "value": "Please tell me your mobile number"
+                    "type": "function",
+                    "value": "mobilePrompt"
                 },
                 {
                     "type": "text",
@@ -67,7 +67,7 @@ journeys = {
             "prompt" : [
                 {
                     "type" : "text",
-                    "value" : "Please rate your experience with us on the scale od 1-10"
+                    "value" : "Please rate your experience with us on the scale of 1-10"
                 }
             ],
             "validator" : null

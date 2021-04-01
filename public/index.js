@@ -92,6 +92,7 @@ socket.on('videoIframes', (videoIframes) => {
 })
 
 socket.on('message', (message) => {
+    console.log('message from index js',message)
     const html = Mustache.render($botMessageTemplate, {
         message
     })
