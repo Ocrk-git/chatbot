@@ -67,7 +67,7 @@ journeys = {
             "prompt" : [
                 {
                     "type" : "text",
-                    "value" : "Please rate your experience with us on the scale od 1-10"
+                    "value" : "Please rate your experience with us on the scale of 1-10"
                 }
             ],
             "validator" : null

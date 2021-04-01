@@ -1,8 +1,15 @@
 const client = require('../utils/context.js')
-const  sendTextMessage = require('../utils/sendingMessage')
+// const  sendTextMessage = require('../utils/sendingMessage')
+const {
+    sendTextMessage,
+    sendQuickReply,
+    sendCards,
+    sendImage,
+    sendVideo
+} = require('../utils/messageObject')
 const context = (senderId) => {
     return new Promise(resolve =>{
-        sendmessage('HEllo, Hi')
+        // sendmessage('HEllo, Hi')
         client.get(senderId, (error, result) => {
             if (error) {
                 resolve(error)
@@ -17,7 +24,7 @@ const context = (senderId) => {
                 console.log('user Name', userName)
                 const userMsg = `Hi ${userName.stepValue}, Please provide your mobile number.`
                 // resolve(userMsg)
-                resolve([sendTextMessage('Hi, HELLOOOOOOOO'), sendTextMessage(userMsg)])
+                resolve([sendTextMessage(userMsg)])
             }
         })
     })
