@@ -1,5 +1,9 @@
-import { GET_MESSAGES, ADD_MESSAGES, USER_MESSAGE } from "../types/types";
-
+import {
+  GET_MESSAGES,
+  ADD_MESSAGES,
+  USER_MESSAGE,
+  BOT_SENDING,
+} from "../types/types";
 
 export const getMessages = () => (dispatch) => {
   dispatch({
@@ -18,4 +22,7 @@ export const userMessage = (message) => (dispatch) => {
     type: USER_MESSAGE,
     payload: message,
   });
-}
+  // dispatch({
+  //   type: BOT_SENDING,
+  // });
+};

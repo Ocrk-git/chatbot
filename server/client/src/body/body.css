@@ -122,7 +122,7 @@
   margin: 4px 0;
   /* border: 1px solid rgb(228, 228, 228); */
   max-width: 82%;
-  width: auto;
+  width: fit-content;
   padding: 8px 14px;
   line-height: 19px;
   font-size: 13px;
@@ -159,7 +159,7 @@
   align-items: center;
 }
 
-.quickReplie:hover{
+.quickReplie:hover {
   background: rgb(0, 0, 0);
   color: aliceblue;
 }

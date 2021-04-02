@@ -11,21 +11,23 @@ const InputContainer = ({ addMessages, userMessage }) => {
   };
   const sendInputHandler = (event) => {
     event.preventDefault();
-    addMessages(text);
-    userMessage(text);
-    console.log("USER_TEXT - ", text);
-    setText("");
+    if (text) {
+      addMessages(text);
+      userMessage(text);
+      console.log("USER_TEXT - ", text);
+      setText("");
+    }
   };
 
   return (
-    <section className="chat-input">
-      <div className="send-input">
-        <div className="send-input-form">
-          <form action="#" className="typing-area">
+    <section className='chat-input'>
+      <div className='send-input'>
+        <div className='send-input-form'>
+          <form action='#' className='typing-area'>
             <input
-              type="text"
+              type='text'
               value={text}
-              placeholder="Type a message here..."
+              placeholder='Type a message here...'
               onChange={userInputChange}
             />
             <div onClick={sendInputHandler}>
