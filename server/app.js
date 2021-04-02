@@ -11,6 +11,7 @@ const { send } = require('process');
 const app = express()
 const server = http.createServer(app)
 const io = socketio(server)
+const  { sendQuickReply } = require('./src/utils/messageObject')
 // const { app, server, io, sendTextMessage} = require('./utils/sendingMessage')
 
 const sendMessage = require('./src/utils/sendMessage');
@@ -53,7 +54,7 @@ io.on('connection', (socket) => {
             }
         ]
     }
-    socket.emit('welcome', welcomeMessage)
+    socket.emit('botMessage', welcomeMessage)
 
     socket.on('sendMessage', async (userMessage, callback) => {
         console.log("User message ---->",userMessage)

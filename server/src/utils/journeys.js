@@ -23,7 +23,7 @@ journeys = {
                 },
                 {
                     "type": "text",
-                    "value": "This helps us to get to know about."
+                    "value": "This helps us to get to know about your ticket.😀"
                 }
             ],
             "validator": "phoneValidator"

@@ -1,15 +1,12 @@
 const path = require('path')
 const { pullIntent } = require('./getIntent')
 const journeys = require('./utils/journeys');
-
 const sendMessage = require('./utils/sendMessage');
 const client = require('./utils/context.js');
-// const { resolve } = require('path');
-// const { response } = require('express');
-
-// const publicDirectoryPath = path.join(__dirname, "../public")
+const asyncForEach = require('./utils/asyncForEach')
 const validatorsPath = path.join(__dirname, "/validators")
 const promptPath = path.join(__dirname, "/prompts")
+const { sendTextMessage } = require("./utils/messageObject")
 
 const botResponse = (userMessage, sender) => {
     return new Promise(resolve => {
@@ -27,10 +24,13 @@ const botResponse = (userMessage, sender) => {
                         if (validatorResponse.success) {
                             client.del(sender)
                             let response = context[context.length - 1]["response"]
-                            response.forEach(async responseObject => {
+                            // response.forEach(async responseObject => {
+                            let messageArray = []
+                            await asyncForEach(response, async (responseObject, index) => {
                                 if (responseObject.type == 'text') {
                                     const toSendMessage = await sendMessage(responseObject, sender)
-                                    resolve(toSendMessage)
+                                    messageArray.push(...toSendMessage)
+                                    // resolve(toSendMessage)
                                     // socket.emit("message", toSendMessage)
                                     // socket.emit("message", responseObject["value"])
                                 }
@@ -41,27 +41,28 @@ const botResponse = (userMessage, sender) => {
                                     console.log("Showing first step")
                                     //Multiple prompts
                                     let prompts = context[currentStep]["prompt"]
-                                    let messageArray = []
-                                    prompts.forEach(async prompt => {
+                                    // prompts.forEach(async prompt => {
+                                    await asyncForEach(prompts, async (prompt, index) => {
                                         const toSendMessage = await sendMessage(prompt, sender)
                                         messageArray.push(...toSendMessage)
                                         // resolve(toSendMessage)
                                         // socket.emit("message", toSendMessage)
                                         // socket.emit("message", prompt["value"])
                                     });
-                                    resolve(messageArray)
+                                    console.log("Message array in response------------->", messageArray)
                                 }
                             })
+                            resolve(messageArray)
                         }
                         else {
-                            resolve(validatorResponse.message)
-                            // socket.emit("message", validatorResponse.message)
+                            resolve([sendTextMessage(validatorResponse.message)])
                         }
                     }
                     else {
                         console.log("No validator found")
                         client.del(sender)
-                        resolve(context[context.length - 1]['response'][0].value)
+                        let message = context[context.length - 1]['response'][0].value
+                        resolve([sendTextMessage(message)])
                         // socket.emit("message", context[context.length - 1]["response"][0]["value"])
                     }
                 }
@@ -82,7 +83,8 @@ const botResponse = (userMessage, sender) => {
                             //Multiple prompts
                             let prompts = context[currentStep]["prompt"]
                             let messageArray = []
-                            prompts.forEach(async prompt => {
+                            // prompts.forEach(async prompt => {
+                            await asyncForEach(prompts, async (prompt, index) => {
                                 const toSendMessage = await sendMessage(prompt, sender)
                                 messageArray.push(...toSendMessage)
                                 // resolve(toSendMessage)
@@ -92,7 +94,7 @@ const botResponse = (userMessage, sender) => {
                             resolve(messageArray)
                         }
                         else {
-                            resolve(validatorResponse.message)
+                            resolve([sendTextMessage(validatorResponse.message)])
                             // socket.emit("message", validatorResponse.message)
                         }
                     }
@@ -104,7 +106,8 @@ const botResponse = (userMessage, sender) => {
                         //Multiple prompts
                         let prompts = context[currentStep]["prompt"]
                         let messageArray = []
-                        prompts.forEach(async prompt => {
+                        // prompts.forEach(async prompt => {
+                        await asyncForEach(prompts, async (prompt, index) => {
                             const toSendMessage = await sendMessage(prompt, sender)
                             console.log('send message from for each', toSendMessage)
                             messageArray.push(...toSendMessage)
@@ -136,7 +139,8 @@ const botResponse = (userMessage, sender) => {
                         //Multiple prompts
                         let prompts = context[currentStep]["prompt"]
                         let messageArray = []
-                        prompts.forEach(async prompt => {
+                        // prompts.forEach(async prompt => {
+                        await asyncForEach(prompts, async (prompt, index) => {
                             const toSendMessage = await sendMessage(prompt, sender)
                             console.log('send message from for loop', toSendMessage)
                             // resolve(toSendMessage)
@@ -148,7 +152,7 @@ const botResponse = (userMessage, sender) => {
                         resolve(messageArray)
                     }
                     catch (e) {
-                        resolve(data.toString())
+                        resolve([sendTextMessage(data.toString())])
 
                         // socket.emit('message', data.toString())
                     }
@@ -157,7 +161,7 @@ const botResponse = (userMessage, sender) => {
                 // Sending small talk response to the user
                 catch (e) {
                     console.log("error while fetching data from python file")
-                    resolve("I am facing a technical issue. Please try later")
+                    resolve([sendTextMessage("I am facing a technical issue. Please try later")])
                     // socket.emit('message', "I am facing a technical issue. Please try later")
                 }
             }
