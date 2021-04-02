@@ -32,7 +32,7 @@ const sendMessage = (prompt, senderId) => {
         else if (prompt.type == "function") {
             const promptFunction = require(promptsPath + '/' + prompt['value'])
             const promptResponse = await promptFunction(senderId)
-            console.log('Prompt response', promptResponse)
+            console.log('Prompt response from function--------------------------------------->', promptResponse)
             // const response = [{
             //     "type" : "textmessage",
             //     'message' : promptResponse
