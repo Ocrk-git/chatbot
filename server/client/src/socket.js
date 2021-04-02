@@ -1,56 +1,90 @@
-import React, { useEffect } from 'react'
-import io from 'socket.io-client'
+import React, { useEffect, useState } from "react";
+import io from "socket.io-client";
 import { connect } from "react-redux";
 // import { userMessage } from "./actions/messages";
+import {
+  botTextMessage,
+  botQuickReplies,
+  botCards,
+} from "./actions/botMessages";
 let socket;
 
-const Socket = ({ userMessage }) => {
-    const endPoint = 'http://localhost:5000'
-    useEffect(() => {
-        socket = io(endPoint)
-        socket.on('welcome', (message) => {
-            console.log("Welcome Message from app.js", message)
-        })
-        return () => {
-
+const Socket = ({
+  userMessage,
+  botCards,
+  botQuickReplies,
+  botTextMessage,
+  botSendingMessage,
+}) => {
+  const endPoint = "http://localhost:5000";
+  console.log("executing socket component");
+  const [data, setData] = useState(true);
+  useEffect(() => {
+    socket = io(endPoint, { transports: ["websocket"] });
+    socket.on("welcome", (messages) => {
+      console.log("Welcome Message from app.js", messages);
+      if (messages) {
+        for (let message of messages) {
+          if (message.type === "text") {
+            botTextMessage(message);
+          } else if (message.type === "quickReply") {
+            console.log(message, "quick replies");
+            botQuickReplies(message);
+          } else if (message.type === "cards") {
+            botCards(message);
+          } else {
+            return null;
+          }
         }
-    }, [endPoint])
+      }
+    });
+    return () => {};
+    //eslint-disable-next-line
+  }, [endPoint]);
 
-    useEffect(() => {
+  // Sending user message to bot
 
-        // Sending user message to bot
+  useEffect(() => {
+    if (userMessage) {
+      console.log("This is from client side (user message)", userMessage);
+      socket.emit("sendMessage", userMessage);
+    }
+    if (data) {
+      console.log("is data in pipeline");
+      setData(false);
 
-        if (userMessage) {
-            console.log("This is from client side (user message)", userMessage)
-            socket.emit('sendMessage', userMessage)
+      // Receiving message from bot
+      socket.on("botMessage", (messages) => {
+        console.log(messages, "bot message");
+        if (messages) {
+          for (let message of messages) {
+            if (message.type === "text") {
+              botTextMessage(message);
+            } else if (message.type === "quickReply") {
+              console.log(message, "quick replies");
+              botQuickReplies(message);
+            } else if (message.type === "cards") {
+              botCards(message);
+            } else {
+              return null;
+            }
+          }
         }
+      });
+    }
 
-        // Receiving message from bot
-        socket.on('botMessage', (messages) => {
-            messages.map((message, index) => {
-                if (message.type === 'text') {
+    // return () => {};
+    //eslint-disable-next-line
+  }, [userMessage]);
 
-                }
-                else if (message.type === 'quickReplies') {
-
-                }
-            })
-        })
-        return () => {
-
-        }
-    }, [userMessage])
-
-
-
-
-    return (
-        <div>
-
-        </div>
-    )
-}
+  return <div></div>;
+};
 const mapStateToProps = (state) => ({
-    userMessage: state.userMessage.userMessage,
+  userMessage: state.userMessage.userMessage,
+  botSendingMessage: state.userMessage.botSendingMessage,
 });
-export default connect(mapStateToProps, {})(Socket);
+export default connect(mapStateToProps, {
+  botTextMessage,
+  botQuickReplies,
+  botCards,
+})(Socket);

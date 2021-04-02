@@ -1,12 +1,13 @@
 import { GET_MESSAGES, ADD_MESSAGES } from "../types/types";
+import { BOT_TEXT_MESSAGE, BOT_QUICKREPLIES, BOT_CARDS } from "../types/types";
 
 const initialState = {
   messages: [
-    {
-      messageFrom: "bot",
-      type: "text",
-      message: "Hey! Welcome to OCRK. How can I help you today?",
-    },
+    // {
+    //   messageFrom: "bot",
+    //   type: "text",
+    //   message: "Hey! Welcome to OCRK. How can I help you today?",
+    // },
     // {
     //   messageFrom: "bot",
     //   type: "quickReply",
@@ -22,51 +23,42 @@ const initialState = {
     //     },
     //   ],
     // },
-    {
-      messageFrom: "bot",
-      type: "cards",
-      cards:[
-        {
-          image:'http://eatwelltraveleverywhere.com/wp-content/uploads/2017/10/At.mosphere.jpg',
-          title:'Banking',
-          description:'Banking is an industry that handles cash, credit, and other financial transactions. Banks provide a safe place to store extra cash and credit.',
-        },
-        {
-          image:'https://i.pinimg.com/originals/39/47/03/394703864ace3f7c7fe232077f7d12f7.jpg',
-          title:'Finance',
-          description:'Using the Hello World guide, you’ll start a branch, write comments, and open a pull request.',
-        },
-        {
-          image:'https://www.jtrholidays.com/static/img/bucket/Tours/Aerial-Tour/Burj-Khalifa/at-the-top-burj-khalifa.jpg',
-          title:'Education',
-          description:'Using the Hello World guide, you’ll start a branch, write comments, and open a pull request.',
-        },
-        {
-          image:'https://images.unsplash.com/photo-1537996194471-e657df975ab4',
-          title:'Insurance',
-          description:'This is essentially a back/next button positioned correctly. You must implement the textual description yourself, however, an example is provided below for reference.',
-        },
-
-      ]
-
-    },
-    {
-      messageFrom: "bot",
-      type: "text",
-      message: "Hey! Welcome to OCRK. How can I help you today?",
-    },
-
- 
-
     // {
-    //   messageFrom: "user",
+    //   messageFrom: "bot",
+    //   type: "cards",
+    //   cards:[
+    //     {
+    //       image:'http://eatwelltraveleverywhere.com/wp-content/uploads/2017/10/At.mosphere.jpg',
+    //       title:'Banking',
+    //       description:'Banking is an industry that handles cash, credit, and other financial transactions. Banks provide a safe place to store extra cash and credit.',
+    //     },
+    //     {
+    //       image:'https://i.pinimg.com/originals/39/47/03/394703864ace3f7c7fe232077f7d12f7.jpg',
+    //       title:'Finance',
+    //       description:'Using the Hello World guide, you’ll start a branch, write comments, and open a pull request.',
+    //     },
+    //     {
+    //       image:'https://www.jtrholidays.com/static/img/bucket/Tours/Aerial-Tour/Burj-Khalifa/at-the-top-burj-khalifa.jpg',
+    //       title:'Education',
+    //       description:'Using the Hello World guide, you’ll start a branch, write comments, and open a pull request.',
+    //     },
+    //     {
+    //       image:'https://images.unsplash.com/photo-1537996194471-e657df975ab4',
+    //       title:'Insurance',
+    //       description:'This is essentially a back/next button positioned correctly. You must implement the textual description yourself, however, an example is provided below for reference.',
+    //     },
+    //   ]
+    // },
+    // {
+    //   messageFrom: "bot",
     //   type: "text",
-    //   message: "hello",
+    //   message: "Hey! Welcome to OCRK. How can I help you today?",
     // },
   ],
 };
 
 const messageReducer = (state = initialState, action) => {
+  let message;
   switch (action.type) {
     case GET_MESSAGES:
       return [...state];
@@ -82,8 +74,40 @@ const messageReducer = (state = initialState, action) => {
           },
         ],
       };
+
+    case BOT_TEXT_MESSAGE:
+      message = action.payload;
+      let addMessage = {
+        messageFrom: "bot",
+        type: message.type,
+        message: message.message,
+      };
+
+      return {
+        ...state,
+        messages: [...state.messages, addMessage],
+      };
+
+    case BOT_QUICKREPLIES:
+      message = action.payload;
+      let addQuickReply = {
+        messageFrom: "bot",
+        type: message.type,
+        message: message.title,
+        options: message.options,
+      };
+
+      return {
+        ...state,
+        messages: [...state.messages, addQuickReply],
+      };
+
+    case BOT_CARDS:
+      return {};
     default:
-      return state;
+      return {
+        ...state,
+      };
   }
 };
 

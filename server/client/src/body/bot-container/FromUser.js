@@ -1,13 +1,13 @@
-import React from 'react'
+import React from "react";
 
-const FromUser = ({message}) => {
-    return (
-        <div className="from-user">
-            <p>
-                {message}
-            </p>
-        </div>
-    )
-}
+const FromUser = ({ message }) => {
+  return (
+    <div className='from-user'>
+      <div className='user-message'>
+        <p>{message}</p>
+      </div>
+    </div>
+  );
+};
 
-export default FromUser
+export default FromUser;
