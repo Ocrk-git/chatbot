@@ -10,8 +10,8 @@ import ScrollToBottom from "react-scroll-to-bottom";
 
 const ChatContainer = ({ messages }) => {
   return (
-    <section className='chat-container'>
-      {/* <ScrollToBottom> */} {/*  className='chat-area' */}
+    // <section >
+    <ScrollToBottom className='chat-container'>
       {messages &&
         //eslint-disable-next-line
         messages.map((item, index) => {
@@ -42,8 +42,8 @@ const ChatContainer = ({ messages }) => {
             return {};
           }
         })}
-      {/* </ScrollToBottom> */}
-    </section>
+    </ScrollToBottom>
+    // </section>
   );
 };
 const mapStateToProps = (state) => ({

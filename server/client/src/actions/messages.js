@@ -1,9 +1,4 @@
-import {
-  GET_MESSAGES,
-  ADD_MESSAGES,
-  USER_MESSAGE,
-  BOT_SENDING,
-} from "../types/types";
+import { GET_MESSAGES, ADD_MESSAGES, USER_MESSAGE } from "../types/types";
 
 export const getMessages = () => (dispatch) => {
   dispatch({
