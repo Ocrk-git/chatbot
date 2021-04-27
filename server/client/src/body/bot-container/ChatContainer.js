@@ -1,17 +1,20 @@
 import React from "react";
 // import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import BotTextMessage from "./Bot-messages-type/BotTextMessage";
+import BotTextMessage from "./FromBot/BotTextMessage";
 import FromUser from "./FromUser";
-import BotQuickReplies from "./Bot-messages-type/BotQuickReplies";
-import BotCards from "./Bot-messages-type/BotCards";
+import BotQuickReplies from "./FromBot/BotQuickReplies";
+import BotCards from "./FromBot/BotCards";
 import ScrollToBottom from "react-scroll-to-bottom";
 // import { getMessages } from "../../actions/messages";
+
+import "./ChatContainer.css"
 
 const ChatContainer = ({ messages }) => {
   return (
     // <section >
     <ScrollToBottom className='chat-container'>
+    {/* <div className= "chat-container"> */}
       {messages &&
         //eslint-disable-next-line
         messages.map((item, index) => {
@@ -42,8 +45,8 @@ const ChatContainer = ({ messages }) => {
             return {};
           }
         })}
+        {/* </div> */}
     </ScrollToBottom>
-    // </section>
   );
 };
 const mapStateToProps = (state) => ({

@@ -1,10 +1,16 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { FaTelegramPlane } from "react-icons/fa";
 import { connect } from "react-redux";
-import { addMessages, userMessage } from "../../actions/messages";
+import { addMessages, userMessage } from "../../actions/userMessageAction";
+import "./chatInput.css";
 
-const InputContainer = ({ addMessages, userMessage }) => {
+const InputContainer = ({ addMessages, userMessage, messages }) => {
   const [text, setText] = useState("");
+
+  const inputRef = useRef(null);
+  useEffect(() => {
+    inputRef.current.focus();
+  }, [messages]);
 
   const userInputChange = (event) => {
     setText(event.target.value);
@@ -20,15 +26,17 @@ const InputContainer = ({ addMessages, userMessage }) => {
   };
 
   return (
-    <section className='chat-input'>
-      <div className='send-input'>
-        <div className='send-input-form'>
-          <form action='#' className='typing-area'>
+    <section className="chat-input">
+      <div className="send-input">
+        <div className="send-input-form">
+          <form action="#" className="typing-area">
             <input
-              type='text'
+              ref={inputRef}
+              type="text"
               value={text}
-              placeholder='Type a message here...'
+              placeholder="Type a message here..."
               onChange={userInputChange}
+              // autofocus="true"
             />
             <div onClick={sendInputHandler}>
               <button>
@@ -42,4 +50,10 @@ const InputContainer = ({ addMessages, userMessage }) => {
   );
 };
 
-export default connect(null, { addMessages, userMessage })(InputContainer);
+const mapStateToProps = (state) => ({
+  messages: state.messageContainer.messages,
+});
+
+export default connect(mapStateToProps, { addMessages, userMessage })(
+  InputContainer
+);

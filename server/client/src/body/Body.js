@@ -2,6 +2,7 @@ import React from "react";
 import "./body.css";
 
 import BotHeader from "./header/BotHeader";
+import "./header/header.css";
 import ChatContainer from "./bot-container/ChatContainer";
 import InputContainer from "./Input/InputContainer";
 import PoweredBy from "./poweredBy/PoweredBy";

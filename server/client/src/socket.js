@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, Fragment } from "react";
 import io from "socket.io-client";
 import { connect } from "react-redux";
 // import { userMessage } from "./actions/messages";
@@ -6,7 +6,10 @@ import {
   botTextMessage,
   botQuickReplies,
   botCards,
-} from "./actions/botMessages";
+} from "./actions/botMessageActions";
+import {
+  homeButton,
+} from "./actions/userMessageAction"
 let socket;
 
 const Socket = ({
@@ -14,11 +17,14 @@ const Socket = ({
   botCards,
   botQuickReplies,
   botTextMessage,
-  botSendingMessage,
+  homeButton,
+  homeButtonClick
 }) => {
   const endPoint = "http://localhost:5000";
-  console.log("executing socket component");
+  // console.log("executing socket component");
   const [data, setData] = useState(true);
+
+
   useEffect(() => {
     socket = io(endPoint, { transports: ["websocket"] });
     socket.on("welcome", (messages) => {
@@ -41,6 +47,7 @@ const Socket = ({
     return () => {};
     //eslint-disable-next-line
   }, [endPoint]);
+
 
   // Sending user message to bot
 
@@ -77,14 +84,25 @@ const Socket = ({
     //eslint-disable-next-line
   }, [userMessage]);
 
-  return <div></div>;
+//On clicking home button
+
+useEffect(() => {
+  if (homeButtonClick){
+    console.log(homeButtonClick,'HOME BUTTON IS:');
+    socket.emit("defaultMessage");
+    homeButton()
+  } 
+}, [homeButtonClick])
+
+  return <Fragment></Fragment>;
 };
 const mapStateToProps = (state) => ({
   userMessage: state.userMessage.userMessage,
-  botSendingMessage: state.userMessage.botSendingMessage,
+  homeButtonClick: state.userMessage.homeButtonClick,
 });
 export default connect(mapStateToProps, {
   botTextMessage,
   botQuickReplies,
   botCards,
+  homeButton
 })(Socket);
