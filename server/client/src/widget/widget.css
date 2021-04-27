@@ -4,12 +4,12 @@
   overflow: hidden;
   display: block;
   background: none;
-  position: absolute;
+  position: fixed;
   border-radius: 50%;
-  right: 40px;
-  bottom: 30px;
-  height: 70px;
-  width: 70px;
+  right: 20px;
+  bottom: 15px;
+  height: 60px;
+  width: 60px;
   z-index: 99999;
   box-shadow: 0 5px 40px rgba(0,0,0,.5)!important;
   cursor: pointer;
@@ -17,8 +17,8 @@
 
 .widget-icon {
   background: none;
-  height: 70px;
-  width: 70px;
+  height: 60px;
+  width: 60px;
   padding: 0;
   vertical-align: middle;
   border-style: none;

@@ -1,0 +1,28 @@
+.qrs {
+  margin: 8px 8px 10px 75px;
+}
+
+.quickReplie {
+    flex-direction: column;
+    padding: 9px 12px;
+    border: var(--quicRepliesBorder);
+    border-radius: var(--quickReplesBorderRadius);
+    color: var(--quickRepliesColor);
+    margin: 2px;
+    cursor: pointer;
+    background: rgb(255, 255, 255);
+    font-size: var(--fontSize);
+    outline: none;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    position: relative;
+    max-width: 280px;
+    width: var(--quickRepliesWidth);
+    align-items: center;
+  }
+  
+  .quickReplie:hover {
+    background: rgb(0, 0, 0);
+    color: aliceblue;
+  }

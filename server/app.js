@@ -66,6 +66,13 @@ io.on("connection", (socket) => {
     socket.emit("botMessage", botMessage);
   });
 
+  //sending default message
+
+  socket.on("defaultMessage", ()=>{
+    console.log("default message");
+    socket.emit("botMessage", [sendQuickReply(welcomeMessage)]);
+  })
+
   // Deleting sender's context on disconnect
   socket.on("disconnect", () => {
     try {

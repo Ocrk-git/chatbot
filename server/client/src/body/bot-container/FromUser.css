@@ -1,0 +1,22 @@
+.user-message {
+  max-width: 70%;
+  width: fit-content;
+  display: flex;
+  align-items: flex-end;
+  margin: 4px 0;
+  padding: 8px 14px;
+  margin-right: 20px;
+  line-height: 19px;
+  font-size: var(--fontSize);
+  border-radius: var(--userMessageBubbleBorder);
+  background: var(--userMessageBubbleBackground);
+  font-weight: 100;
+}
+
+.from-user {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  width: 100%;
+  color: var(--userMessageBubblecolor);
+}

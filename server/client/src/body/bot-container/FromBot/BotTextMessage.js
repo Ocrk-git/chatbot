@@ -1,4 +1,5 @@
 import React from "react";
+import './bot-messages-type-style/textMessage.css'
 
 const BotTextMessage = (props) => {
   return (

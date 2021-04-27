@@ -1,4 +1,10 @@
-import { GET_MESSAGES, ADD_MESSAGES, USER_MESSAGE } from "../types/types";
+import {
+  GET_MESSAGES,
+  ADD_MESSAGES,
+  USER_MESSAGE,
+  HOME_BUTTON,
+  USER_MESSAGE_SENT,
+} from "../types/types";
 
 export const getMessages = () => (dispatch) => {
   dispatch({
@@ -17,7 +23,17 @@ export const userMessage = (message) => (dispatch) => {
     type: USER_MESSAGE,
     payload: message,
   });
-  // dispatch({
-  //   type: BOT_SENDING,
-  // });
+};
+
+export const homeButton = () => (dispatch) => {
+  dispatch({
+    type: HOME_BUTTON,
+  });
+};
+
+
+export const userMessageSent = () => (dispatch) => {
+  dispatch({
+    type: USER_MESSAGE_SENT,
+  });
 };
