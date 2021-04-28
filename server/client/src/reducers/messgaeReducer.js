@@ -51,7 +51,21 @@ const messageReducer = (state = initialState, action) => {
       };
 
     case BOT_CARDS:
-      return {};
+      message = action.payload;
+      // let cards = []
+      // for(let item of message){
+      // }
+      let addCards = {
+        messageFrom: "bot",
+        type: message.type,
+        // message: message.title,
+        // options: message.options,
+        cards: message.message,
+      };
+      return {
+        ...state,
+        messages: [...state.messages, addCards],
+      };;
     default:
       return {
         ...state,

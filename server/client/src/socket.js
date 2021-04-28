@@ -89,7 +89,7 @@ const Socket = ({
 useEffect(() => {
   if (homeButtonClick){
     console.log(homeButtonClick,'HOME BUTTON IS:');
-    socket.emit("defaultMessage");
+    socket.emit("ocrk_home");
     homeButton()
   } 
 }, [homeButtonClick])

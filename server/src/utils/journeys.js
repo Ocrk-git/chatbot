@@ -10,6 +10,19 @@ journeys = {
                 {
                     "type": "text",
                     "value": "Can you please tell me your name?"
+                },
+                {
+                    "type" : "cards",
+                    "value" : [{
+                        "image" : "https://assets.limetray.com/assets/user_images/menus/compressed/1587228162_chickendumbiryani.jpg",
+                        "title" : "Card Title",
+                        "description" : "Card Description"
+                    },
+                    {
+                        "image" : "https://assets.limetray.com/assets/user_images/menus/compressed/1587228162_chickendumbiryani.jpg",
+                        "title" : "Card Title2",
+                        "description" : "Card Description"
+                    }]
                 }
             ],
             "validator": null

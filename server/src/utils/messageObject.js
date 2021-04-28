@@ -14,8 +14,8 @@ const sendQuickReply = (message) => {
 
 const sendCards = (message) => {
   return {
-    type: "card",
-    ...message,
+    type: "cards",
+    message,
   };
 };
 

@@ -17,7 +17,7 @@ const sendMessage = (prompt, senderId) => {
         else if (prompt.type == "quickReply") {
             resolve([sendQuickReply(prompt.value)])
         }
-        else if (prompt.type == "card") {
+        else if (prompt.type == "cards") {
             resolve([sendCards(prompt.value)])
 
         }
