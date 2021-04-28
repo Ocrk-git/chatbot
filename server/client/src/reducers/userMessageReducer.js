@@ -1,10 +1,16 @@
-import { USER_MESSAGE, BOT_SENDING, HOME_BUTTON, USER_MESSAGE_SENT } from "../types/types";
-import { userMessageSent } from "../actions/userMessageAction";
+import {
+  USER_MESSAGE,
+  BOT_SENDING,
+  HOME_BUTTON,
+  USER_MESSAGE_SENT,
+  HIDE_QUICK_REPLIES,
+} from "../types/types";
 
 const initialState = {
   userMessage: "",
   userMessageDelivered: false,
   homeButtonClick: false,
+  hideQuickRepliesButton: false,
 };
 
 const userMessage = (state = initialState, action) => {
@@ -13,6 +19,7 @@ const userMessage = (state = initialState, action) => {
       return {
         userMessage: action.payload,
         userMessageDelivered: true,
+        hideQuickRepliesButton: true,
       };
     case BOT_SENDING:
       return {
@@ -23,14 +30,20 @@ const userMessage = (state = initialState, action) => {
       return {
         ...state,
         homeButtonClick: !state.homeButtonClick,
+        hideQuickRepliesButton: true,
       };
 
-      case USER_MESSAGE_SENT:
-        return {
-          ...state,
-          userMessageDelivered: !state.userMessageDelivered,
-        };
+    case USER_MESSAGE_SENT:
+      return {
+        ...state,
+        userMessageDelivered: !state.userMessageDelivered,
+      };
 
+    case HIDE_QUICK_REPLIES:
+      return {
+        ...state,
+        hideQuickRepliesButton: false,
+      };
     default:
       return state;
   }

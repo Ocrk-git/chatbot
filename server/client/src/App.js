@@ -5,7 +5,7 @@ import Body from "./body/Body";
 import { Provider } from "react-redux";
 import store from "./store";
 import Socket from "./socket";
-import Analytics from "./Analytics";
+// import Analytics from "./Analytics";
 // import { Socket } from "socket.io-client";
 
 const App = () => {
@@ -32,9 +32,3 @@ const App = () => {
 };
 
 export default App;
-
-
-
-
-
-
