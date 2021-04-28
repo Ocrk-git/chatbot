@@ -1,15 +1,15 @@
 import React, { useEffect, useState, Fragment } from "react";
 import io from "socket.io-client";
 import { connect } from "react-redux";
-// import { userMessage } from "./actions/messages";
 import {
   botTextMessage,
   botQuickReplies,
   botCards,
 } from "./actions/botMessageActions";
-import {
-  homeButton,
-} from "./actions/userMessageAction"
+import { homeButton } from "./actions/userMessageAction";
+
+import { botTypingMessageAction } from "./actions/botMessageActions";
+
 let socket;
 
 const Socket = ({
@@ -18,15 +18,17 @@ const Socket = ({
   botQuickReplies,
   botTextMessage,
   homeButton,
-  homeButtonClick
+  homeButtonClick,
+  botTypingMessageAction,
 }) => {
   const endPoint = "http://localhost:5000";
   // console.log("executing socket component");
   const [data, setData] = useState(true);
 
-
   useEffect(() => {
-    socket = io(endPoint, { transports: ["websocket"] });
+    socket = io(endPoint, {
+      transports: ["websocket"],
+    });
     socket.on("welcome", (messages) => {
       console.log("Welcome Message from app.js", messages);
       if (messages) {
@@ -48,7 +50,6 @@ const Socket = ({
     //eslint-disable-next-line
   }, [endPoint]);
 
-
   // Sending user message to bot
 
   useEffect(() => {
@@ -61,20 +62,49 @@ const Socket = ({
       setData(false);
 
       // Receiving message from bot
-      socket.on("botMessage", (messages) => {
-        console.log(messages, "bot message");
+      socket.on("botMessage", async (messages) => {
+        // console.log(messages, "bot message");
+        console.log(messages.length, "bot messages length");
+
         if (messages) {
-          for (let message of messages) {
-            if (message.type === "text") {
-              botTextMessage(message);
-            } else if (message.type === "quickReply") {
-              console.log(message, "quick replies");
-              botQuickReplies(message);
-            } else if (message.type === "cards") {
-              botCards(message);
-            } else {
-              return null;
-            }
+          var interval = 1 * 1000; // 10 seconds;
+          for (var i = 0; i <= messages.length - 1; i++) {
+            setTimeout(
+              async function (i) {
+                if (messages[i].type === "text") {
+                  await botTextMessage(messages[i]);
+                } else if (messages[i].type === "quickReply") {
+                  console.log(messages[i], "quick replies");
+                  await botQuickReplies(messages[i]);
+                } else if (messages[i].type === "cards") {
+                  await botCards(messages[i]);
+                } else {
+                  return null;
+                }
+              },
+              interval * i,
+              i
+            );
+          }
+
+          // for (let message of messages) {
+          //   if (message.type === "text") {
+          //     botTextMessage(message);
+          //   } else if (message.type === "quickReply") {
+          //     console.log(message, "quick replies");
+          //     botQuickReplies(message);
+          //   } else if (message.type === "cards") {
+          //     botCards(message);
+          //   } else {
+          //     return null;
+          //   }
+          // }
+          if (messages.length === 1) {
+            botTypingMessageAction();
+          } else {
+            setTimeout(() => {
+              botTypingMessageAction();
+            }, 1 * 1000);
           }
         }
       });
@@ -84,7 +114,7 @@ const Socket = ({
     //eslint-disable-next-line
   }, [userMessage]);
 
-//On clicking home button
+  //On clicking home button
 
 useEffect(() => {
   if (homeButtonClick){
@@ -94,7 +124,8 @@ useEffect(() => {
   } 
 }, [homeButtonClick])
 
-  return <Fragment></Fragment>;
+
+  return <Fragment> </Fragment>;
 };
 const mapStateToProps = (state) => ({
   userMessage: state.userMessage.userMessage,
@@ -104,5 +135,6 @@ export default connect(mapStateToProps, {
   botTextMessage,
   botQuickReplies,
   botCards,
-  homeButton
+  homeButton,
+  botTypingMessageAction,
 })(Socket);
