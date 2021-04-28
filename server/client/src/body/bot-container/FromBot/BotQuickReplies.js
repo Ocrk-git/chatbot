@@ -4,9 +4,11 @@ import { connect } from "react-redux";
 import {
   addMessages,
   userMessage,
-  homeButton,
-  userMessageSent
+  userMessageSent,
+  hideQuickRepliesAction,
 } from "../../../actions/userMessageAction";
+
+import { botTypingMessageAction } from "../../../actions/botMessageActions";
 
 const BotQuickReplies = ({
   image,
@@ -14,42 +16,45 @@ const BotQuickReplies = ({
   options,
   addMessages,
   userMessage,
-  homeButtonClick,
-  userMessageSent,
-  userMessageDelivered
+  // homeButtonClick,
+  // userMessageSent,
+  // userMessageDelivered,
+  hideQuickRepliesButton,
+  hideQuickRepliesAction,
+  botTypingMessageAction,
 }) => {
   const [hideQuickReplies, setHideQuicReplies] = useState(true);
 
   useEffect(() => {
-    if (homeButtonClick) {
+    if (hideQuickRepliesButton) {
       setHideQuicReplies(false);
+      hideQuickRepliesAction();
     }
-    else if(userMessageDelivered){
-      setHideQuicReplies(false);
-      userMessageSent()
-    }
-  }, [homeButtonClick, userMessageDelivered]);
+
+    //eslint-disable-next-line
+  }, [hideQuickRepliesButton]);
 
   const buttonClicked = (e) => {
     addMessages(e.target.outerText);
     userMessage(e.target.outerText);
     setHideQuicReplies(false);
+    botTypingMessageAction();
   };
   return (
     <Fragment>
-      <div className="from-bot">
-        <img className="message-icon" src={image} alt="logo" />
+      <div className='from-bot'>
+        <img className='message-icon' src={image} alt='logo' />
 
-        <div className="text-message">
+        <div className='text-message'>
           <p>{message}</p>
         </div>
       </div>
       {hideQuickReplies && (
-        <div className="qrs">
+        <div className='qrs'>
           {options &&
             options.map((option, index) => (
               <button
-                className="quickReplie"
+                className='quickReplie'
                 key={index}
                 onClick={buttonClicked}
               >
@@ -65,8 +70,13 @@ const BotQuickReplies = ({
 const mapStateToProps = (state) => ({
   userMessageDelivered: state.userMessage.userMessageDelivered,
   homeButtonClick: state.userMessage.homeButtonClick,
+  hideQuickRepliesButton: state.userMessage.hideQuickRepliesButton,
 });
 
-export default connect(mapStateToProps, { addMessages, userMessage,userMessageSent })(
-  BotQuickReplies
-);
+export default connect(mapStateToProps, {
+  addMessages,
+  userMessage,
+  userMessageSent,
+  hideQuickRepliesAction,
+  botTypingMessageAction,
+})(BotQuickReplies);

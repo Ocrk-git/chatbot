@@ -3,6 +3,7 @@ import {
   BOT_QUICKREPLIES,
   BOT_CARDS,
   BOT_SENDING,
+  BOT_TYPING_BUBBLE,
 } from "../types/types";
 
 export const botTextMessage = (msg) => (dispatch) => {
@@ -29,5 +30,11 @@ export const botCards = (msg) => (dispatch) => {
 export const botSendingMessage = () => (dispatch) => {
   dispatch({
     type: BOT_SENDING,
+  });
+};
+
+export const botTypingMessageAction = () => (dispatch) => {
+  dispatch({
+    type: BOT_TYPING_BUBBLE,
   });
 };

@@ -4,6 +4,7 @@ import {
   USER_MESSAGE,
   HOME_BUTTON,
   USER_MESSAGE_SENT,
+  HIDE_QUICK_REPLIES,
 } from "../types/types";
 
 export const getMessages = () => (dispatch) => {
@@ -31,9 +32,14 @@ export const homeButton = () => (dispatch) => {
   });
 };
 
-
 export const userMessageSent = () => (dispatch) => {
   dispatch({
     type: USER_MESSAGE_SENT,
+  });
+};
+
+export const hideQuickRepliesAction = () => (dispatch) => {
+  dispatch({
+    type: HIDE_QUICK_REPLIES,
   });
 };
