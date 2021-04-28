@@ -116,14 +116,14 @@ const Socket = ({
 
   //On clicking home button
 
-  useEffect(() => {
-    if (homeButtonClick) {
-      console.log(homeButtonClick, "HOME BUTTON IS:");
-      socket.emit("defaultMessage");
-      homeButton();
-    }
-    //eslint-disable-next-line
-  }, [homeButtonClick]);
+useEffect(() => {
+  if (homeButtonClick){
+    console.log(homeButtonClick,'HOME BUTTON IS:');
+    socket.emit("ocrk_home");
+    homeButton()
+  } 
+}, [homeButtonClick])
+
 
   return <Fragment> </Fragment>;
 };

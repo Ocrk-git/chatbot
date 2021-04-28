@@ -3,25 +3,6 @@ import { BOT_TEXT_MESSAGE, BOT_QUICKREPLIES, BOT_CARDS } from "../types/types";
 
 const initialState = {
   messages: [
-    {
-      messageFrom: "bot",
-      type: "cards",
-      cards: [
-        {
-          title: "Food",
-          image:
-            "https://assets.limetray.com/assets/user_images/menus/compressed/1587228162_chickendumbiryani.jpg",
-          description: "this is desc",
-        },
-
-        {
-          title: "Gif moothodu",
-          image:
-            "https://media1.tenor.com/images/a838cefedbec2abffb0f50b19bd1b4d6/tenor.gif",
-          description: "this is description 2",
-        },
-      ],
-    },
   ],
 };
 
@@ -71,9 +52,23 @@ const messageReducer = (state = initialState, action) => {
       };
 
     case BOT_CARDS:
+
+      message = action.payload;
+      // let cards = []
+      // for(let item of message){
+      // }
+      let addCards = {
+        messageFrom: "bot",
+        type: message.type,
+        // message: message.title,
+        // options: message.options,
+        cards: message.message,
+      };
       return {
         ...state,
-      };
+        messages: [...state.messages, addCards],
+      };;
+
     default:
       return {
         ...state,
