@@ -12,7 +12,10 @@
     "@testing-library/react": "^11.2.5",
     "@testing-library/user-event": "^12.8.3",
     "concurrently": "^6.0.0",
+    "crypto-js": "^4.0.0",
+    "env-cmd": "^10.1.0",
     "react": "^17.0.2",
+    "react-app-env": "^1.2.3",
     "react-dom": "^17.0.2",
     "react-icons": "^4.2.0",
     "react-redux": "^7.2.3",
@@ -24,7 +27,7 @@
     "web-vitals": "^1.1.1"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "env-cmd -f ../../config/dev.env react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
