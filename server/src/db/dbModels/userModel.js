@@ -15,7 +15,15 @@ const User = mongoose.model('User', {
     },
     "sessionPeriod" : {
         type : Number,
-    }
+    },
+    "conversation" : [{
+        type : {
+            type : String
+        },
+        message : {
+            type : String
+        }
+    }]
 })
 
 module.exports = User
