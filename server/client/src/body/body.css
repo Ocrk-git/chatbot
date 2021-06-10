@@ -31,9 +31,12 @@
   --typingAreaInputButtonBackground: #000000;
 }
 
+body {
+  font-family: Roboto, Helvetica, Arial, sans-serif;
+}
 .chatbot {
-  position: fixed;
-  right: 20px;
+  position: absolute;
+  left: 72%;
   bottom: 90px;
   min-width: var(--width);
   opacity: 999999;
@@ -59,4 +62,13 @@
   margin: 0 15px 2px 0;
   border: 1px solid #aaa;
   align-self: flex-end;
+}
+
+.hide-message-icon {
+  background-color: none;
+  border-radius: 50%;
+  width: 45px;
+  height: 45px;
+  margin: 0 15px 2px 0;
+  align-self: flex-start;
 }
