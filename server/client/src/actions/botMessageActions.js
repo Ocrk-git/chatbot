@@ -6,24 +6,24 @@ import {
   BOT_TYPING_BUBBLE,
 } from "../types/types";
 
-export const botTextMessage = (msg) => (dispatch) => {
+export const botTextMessage = (message) => (dispatch) => {
   dispatch({
     type: BOT_TEXT_MESSAGE,
-    payload: msg,
+    payload: message,
   });
 };
 
-export const botQuickReplies = (msg) => (dispatch) => {
+export const botQuickReplies = (message) => (dispatch) => {
   dispatch({
     type: BOT_QUICKREPLIES,
-    payload: msg,
+    payload: message,
   });
 };
 
-export const botCards = (msg) => (dispatch) => {
+export const botCards = (message) => (dispatch) => {
   dispatch({
     type: BOT_CARDS,
-    payload: msg,
+    payload: message,
   });
 };
 

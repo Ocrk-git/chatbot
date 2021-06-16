@@ -1,15 +1,15 @@
 const express = require("express");
 const http = require("http");
 const path = require("path");
-const crypto = require("crypto-js")
+const crypto = require("crypto-js");
 const socketio = require("socket.io");
 //Database connection
-require("../server/src/db/mongoose")
-const userDb = require("../server/src/db/dbModels/userModel")
+require("../server/src/db/mongoose");
+const userDb = require("../server/src/db/dbModels/userModel");
 
 const client = require("./src/utils/context.js");
 const botResponse = require("./src/botResponse");
-const MessageUpdateInDB = require("../server/src/utils/updateMessageInDB")
+const MessageUpdateInDB = require("../server/src/utils/updateMessageInDB");
 const { sendQuickReply } = require("./src/utils/messageObject");
 const app = express();
 const server = http.createServer(app);
@@ -20,12 +20,14 @@ const userMsgsRouter = require("../server/src/routers/userMessages")
 const journeysRouter = require("../server/src/routers/journeys")
 const trainingRouter = require("../server/src/routers/training")
 
+
 const publicDirectoryPath = path.join(__dirname, "./public/");
 
 const port = process.env.PORT || 5000;
-const cryptoSecretKey = process.env.CRYPTO_SECRET_KEY
+const cryptoSecretKey = process.env.CRYPTO_SECRET_KEY;
 
 app.use(express.static(publicDirectoryPath));
+
 app.use(express.json())
 app.use(syncApiRouter)
 app.use(userMsgsRouter)
@@ -38,11 +40,10 @@ client.on("error", (err) => {
 });
 
 io.on("connection", async (socket) => {
-
   const sender = socket.id;
-  console.log("secret key", process.env.CRYPTO_SECRET_KEY)
+  console.log("secret key", process.env.CRYPTO_SECRET_KEY);
   console.log("new web socket connection", sender);
-  const startTime = new Date()
+  const startTime = new Date();
 
   const welcomeMessage = {
     title:
@@ -62,27 +63,34 @@ io.on("connection", async (socket) => {
       },
     ],
   };
-  
-  var encryptedBotWelcomeMessage = await crypto.AES.encrypt(JSON.stringify([sendQuickReply(welcomeMessage)]), cryptoSecretKey).toString();
+
+  var encryptedBotWelcomeMessage = await crypto.AES.encrypt(
+    JSON.stringify([sendQuickReply(welcomeMessage)]),
+    cryptoSecretKey
+  ).toString();
   const newUser = new userDb({
-    userId: sender, startTime,
+    userId: sender,
+    startTime,
     conversation: {
       type: "bot",
-      message: encryptedBotWelcomeMessage
-    }
-  })
-  await newUser.save()
+      message: encryptedBotWelcomeMessage,
+    },
+  });
+  await newUser.save();
   socket.emit("welcome", encryptedBotWelcomeMessage);
 
   socket.on("sendMessage", async (userMessage, callback) => {
-    await MessageUpdateInDB("user", userMessage, sender)
+    await MessageUpdateInDB("user", userMessage, sender);
     var bytes = crypto.AES.decrypt(userMessage, cryptoSecretKey);
     var decrptedUserMessage = bytes.toString(crypto.enc.Utf8);
-    console.log("decrypted message", decrptedUserMessage)
+    console.log("decrypted message", decrptedUserMessage);
     const botMessage = await botResponse(decrptedUserMessage, sender);
-    var encryptedBotMessage = await crypto.AES.encrypt(JSON.stringify(botMessage), cryptoSecretKey).toString();
-    console.log("bot Message", encryptedBotMessage)
-    await MessageUpdateInDB("bot", encryptedBotMessage, sender)
+    var encryptedBotMessage = await crypto.AES.encrypt(
+      JSON.stringify(botMessage),
+      cryptoSecretKey
+    ).toString();
+    console.log("bot Message", encryptedBotMessage);
+    await MessageUpdateInDB("bot", encryptedBotMessage, sender);
     socket.emit("botMessage", encryptedBotMessage);
   });
 
@@ -96,18 +104,24 @@ io.on("connection", async (socket) => {
     } catch (e) {
       console.log("Error", e);
     }
-    socket.emit("botMessage", [sendQuickReply(welcomeMessage)]);
-  })
+    socket.emit("botMessage", encryptedBotWelcomeMessage);
+  });
 
   // Deleting sender's context on disconnect
   socket.on("disconnect", async () => {
     try {
       client.del(sender);
-      const user = await userDb.findOne({ userId: sender })
-      const startTime = user.startTime
-      const endTime = new Date()
-      const sessionPeriod = (Math.round(endTime.getTime() / 1000) - Math.round(startTime.getTime() / 1000))
-      await userDb.findByIdAndUpdate(user._id, { endTime, sessionPeriod }, { new: true, runValidators: true })
+      const user = await userDb.findOne({ userId: sender });
+      const startTime = user.startTime;
+      const endTime = new Date();
+      const sessionPeriod =
+        Math.round(endTime.getTime() / 1000) -
+        Math.round(startTime.getTime() / 1000);
+      await userDb.findByIdAndUpdate(
+        user._id,
+        { endTime, sessionPeriod },
+        { new: true, runValidators: true }
+      );
       console.log(`Deleting context for sender ${sender}`);
     } catch (e) {
       console.log("Error", e);

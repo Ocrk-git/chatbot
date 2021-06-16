@@ -16,6 +16,7 @@ const BotQuickReplies = ({
   options,
   addMessages,
   userMessage,
+  hide,
   // homeButtonClick,
   // userMessageSent,
   // userMessageDelivered,
@@ -24,6 +25,8 @@ const BotQuickReplies = ({
   botTypingMessageAction,
 }) => {
   const [hideQuickReplies, setHideQuicReplies] = useState(true);
+  var image = <img className='message-icon' src={image} alt='logo' />;
+  var noImage = <div className='hide-message-icon' />;
 
   useEffect(() => {
     if (hideQuickRepliesButton) {
@@ -43,7 +46,9 @@ const BotQuickReplies = ({
   return (
     <Fragment>
       <div className='from-bot'>
-        <img className='message-icon' src={image} alt='logo' />
+        {hide ? noImage : image}
+
+        {/* <img className='message-icon' src={image} alt='logo' /> */}
 
         <div className='text-message'>
           <p>{message}</p>
