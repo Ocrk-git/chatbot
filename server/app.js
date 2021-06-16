@@ -15,8 +15,11 @@ const app = express();
 const server = http.createServer(app);
 const io = socketio(server);
 
-const syncApiRouter = require("../server/src/routers/syncApi");
-const userMsgsRouter = require("../server/src/routers/userMessages");
+const syncApiRouter = require("../server/src/routers/syncApi")
+const userMsgsRouter = require("../server/src/routers/userMessages")
+const journeysRouter = require("../server/src/routers/journeys")
+const trainingRouter = require("../server/src/routers/training")
+
 
 const publicDirectoryPath = path.join(__dirname, "./public/");
 
@@ -24,9 +27,13 @@ const port = process.env.PORT || 5000;
 const cryptoSecretKey = process.env.CRYPTO_SECRET_KEY;
 
 app.use(express.static(publicDirectoryPath));
-app.use(express.json());
-app.use(syncApiRouter);
-app.use(userMsgsRouter);
+
+app.use(express.json())
+app.use(syncApiRouter)
+app.use(userMsgsRouter)
+app.use(journeysRouter)
+app.use(trainingRouter)
+
 // Print redis errors to the console
 client.on("error", (err) => {
   console.log("Error " + err);

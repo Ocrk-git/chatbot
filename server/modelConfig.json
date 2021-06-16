@@ -1,0 +1,1 @@
+{"vectorizer": "CountVectorizer", "classifier": "DecisionTreeClassifier", "accuracy": 1.0}
