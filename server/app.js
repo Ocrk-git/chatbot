@@ -17,6 +17,8 @@ const io = socketio(server);
 
 const syncApiRouter = require("../server/src/routers/syncApi")
 const userMsgsRouter = require("../server/src/routers/userMessages")
+const journeysRouter = require("../server/src/routers/journeys")
+const trainingRouter = require("../server/src/routers/training")
 
 const publicDirectoryPath = path.join(__dirname, "./public/");
 
@@ -27,6 +29,9 @@ app.use(express.static(publicDirectoryPath));
 app.use(express.json())
 app.use(syncApiRouter)
 app.use(userMsgsRouter)
+app.use(journeysRouter)
+app.use(trainingRouter)
+
 // Print redis errors to the console
 client.on("error", (err) => {
   console.log("Error " + err);
