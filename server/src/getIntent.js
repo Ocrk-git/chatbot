@@ -1,12 +1,14 @@
 const spawn = require('child_process').spawn
 
+var prediction = {}
 const pullIntent = (userMessage) => {
     return new Promise((resolve,reject) => {
-        let pythonFile = __dirname + "/load_model.py"
+        let pythonFile = __dirname + "/nlp/prediction.py"
         let pythonModel = spawn('python', [pythonFile, userMessage])
         pythonModel.stdout.on('data', (data) => {
-            console.log(data.toString(), "Data from python")
-            resolve(data.toString())
+            // console.log(data.toString(), "Data from python")
+            data = JSON.parse(data)
+            resolve(data)
         })
 
         pythonModel.stderr.on('data', (data) => {
