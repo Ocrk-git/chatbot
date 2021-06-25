@@ -10,6 +10,7 @@ from torch.utils.data import DataLoader, Dataset
 from cnn_model import NeuralNet
 from nlp_utils import tokenize, stem, bag_of_words
 from prediction_helper import prediction
+import json  
 
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 FILE = "config.pth"
@@ -45,5 +46,8 @@ final_prediction = {
     "confidence": confidence.item(),
     "entities": prediction(str(utterance))
 }
+
+final_prediction = json.dumps(final_prediction, indent = 4)  
+
 
 print(final_prediction)
