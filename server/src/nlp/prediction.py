@@ -13,7 +13,7 @@ from prediction_helper import prediction
 import json  
 
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
-FILE = "config.pth"
+FILE = "./../../config.pth"
 config = torch.load(FILE)
 
 input_size = config['input_size']
