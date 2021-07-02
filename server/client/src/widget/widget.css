@@ -6,8 +6,9 @@
   background: none;
   position: absolute;
   border-radius: 50%;
-  bottom: 2%;
-  left: 93%;
+  bottom: 20px;
+  right: 20px;
+  /* left: 80%; */
   height: 60px;
   width: 60px;
   z-index: 99999;
@@ -20,55 +21,6 @@
   height: 60px;
   width: 60px;
   padding: 0;
-  /* vertical-align: middle; */
-  border-style: none;
-  -webkit-user-drag: none;
-  /* -khtml-user-drag: none; */
-  /* -moz-user-drag: none; */
-  /* -o-user-drag: none; */
-  /* user-select: none; */
-  /* user-drag: none; */
-  /* border-radius: 50%; */
-}
 
-/* #click{
-  display: none;
-  background-color: brown;
-} */
-
-/* label{
-  position: absolute;
-  right: 30px;
-  bottom: 20px;
-  height: 50px;
-  width: 50px;
-  background: -webkit-linear-gradient(left, #000000, #252525);
-  text-align: center;
-  line-height: 55px;
-  border: 1px solid red;
-  border-radius: 50px;
-  font-size: 30px;
-  color: #fff;
-  cursor: pointer;
-} */
-/* label i{
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  transition: all 0.4s ease;
+  border-radius: 50%;
 }
-label i.fas{
-  opacity: 0;
-  pointer-events: none;
-}
-#click:checked ~ label i.fas{
-  opacity: 1;
-  pointer-events: auto;
-  transform: translate(-50%, -50%) rotate(180deg);
-}
-#click:checked ~ label i.fab{
-  opacity: 0;
-  pointer-events: none;
-  transform: translate(-50%, -50%) rotate(180deg);
-} */
