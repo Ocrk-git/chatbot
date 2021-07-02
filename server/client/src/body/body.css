@@ -2,27 +2,27 @@
   --botTheme: rgb(0, 0, 0);
   --title: #ffffff;
   --sub-title: #ffffff;
-  --width: 370px;
-  --height: 420px;
+  --width: 380px;
+  --height: 70vh;
   --botRadius: 10px;
-  --fontSize: 12px;
+  --fontSize: 13px;
 
   /* text messages */
   --textMessageColor: rgb(38, 50, 56);
   --textMessageBackground: rgb(230, 232, 234);
-  --textMessageBorder: 10px;
+  --textMessageBorder: 8px;
 
   /* quick reples */
   --quickRepliesWidth: 230px;
   --quicRepliesBorder: 1px solid rgb(184, 182, 182);
-  --quickReplesBorderRadius: 15px;
+  --quickReplesBorderRadius: 30px;
   --quickRepliesColor: rgb(52, 52, 52);
 
   /* user bubble  */
 
   --userMessageBubblecolor: #fff;
   --userMessageBubbleBackground: #000000;
-  --userMessageBubbleBorder: 10px;
+  --userMessageBubbleBorder: 8px;
 
   /* typing area  */
 
@@ -33,42 +33,65 @@
 
 body {
   font-family: Roboto, Helvetica, Arial, sans-serif;
-}
-.chatbot {
-  position: absolute;
+  /* position: absolute;
   left: 72%;
-  bottom: 90px;
+  right: 20px;
+  bottom: 20px;
+  min-height: ;
   min-width: var(--width);
+  min-height: ;
   opacity: 999999;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.205);
   border-radius: var(--botRadius);
   z-index: 999999;
+  overflow: hidden; */
+}
+
+.chatbot {
+  position: absolute;
+  right: 20px;
+  bottom: 20px;
+  min-width: var(--width);
+  opacity: 999999;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.205);
+  border-radius: var(--botRadius);
+  /* transition: all 0.4s ease-in-out; */
+  /* transform: translateY(+100%); */
+  z-index: 999999;
   overflow: hidden;
+}
+
+.chatbot-show {
+  transform: translateY(0%);
 }
 
 /* container  */
 
 .from-bot {
   display: flex;
-  align-items: flex-start;
-  margin: 5px 0 5px 10px;
+  /* flex-direction: row; */
+  align-items: center;
+  /* margin-bottom: 5px; */
 }
+.bot-icon-messages {
+  display: flex;
+  /* background-color: none; */
+  /* border-radius: 50%; */
+  min-width: 35px;
+  height: 35px;
 
+  /* border: 1px solid #aaa; */
+
+  margin-bottom: 4px;
+  align-self: flex-end;
+}
 .message-icon {
   background-color: none;
   border-radius: 50%;
-  width: 45px;
-  height: 45px;
-  margin: 0 15px 2px 0;
-  border: 1px solid #aaa;
-  align-self: flex-end;
-}
+  min-width: 35px;
+  height: 35px;
+  margin-bottom: 4px;
 
-.hide-message-icon {
-  background-color: none;
-  border-radius: 50%;
-  width: 45px;
-  height: 45px;
-  margin: 0 15px 2px 0;
-  align-self: flex-start;
+  border: 1px solid #aaa;
+  /* align-self: flex-end; */
 }

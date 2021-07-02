@@ -1,25 +1,18 @@
-html,
-body {
-  margin: 0;
-  padding: 0;
-}
-
-body {
-  background: #f6f7f8;
-}
-
 div#wave {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
   position: relative;
-  margin-left: 45px;
-  margin-top: 25px;
-  text-align: center;
-  width: 100px;
+  margin: 5px 50px;
+  /* margin-top: 25px; */
+  /* text-align: center; */
+  /* width: 100px; */
   height: 40px;
 }
 div#wave .dot {
   display: inline-block;
-  width: 6px;
-  height: 6px;
+  width: 5px;
+  height: 5px;
   border-radius: 50%;
   margin-right: 3px;
   background: #bbb;
