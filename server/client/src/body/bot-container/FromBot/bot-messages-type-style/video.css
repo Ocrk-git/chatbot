@@ -1,0 +1,9 @@
+.video {
+  max-width: 77%;
+  margin: 4px 10px;
+  overflow: hidden;
+}
+
+.video video {
+  border-radius: 10px;
+}

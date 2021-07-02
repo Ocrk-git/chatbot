@@ -12,7 +12,7 @@
     -o-background-size: cover;
     background-size: cover; */
   background: #fff;
-  overflow: hidden;
+  overflow-y: auto;
 
   display: flex;
   flex-direction: column;
@@ -20,5 +20,5 @@
 
   /* height: calc(100vh - 195px); */
 
-  /* padding: 10px 0px 5px 20px; */
+  padding: 7px 14px 0 10px;
 }

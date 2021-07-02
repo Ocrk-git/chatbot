@@ -1,17 +1,19 @@
 .text-message {
-  max-width: 74%;
+  max-width: 77%;
   padding: 8px 14px;
   line-height: 19px;
   font-size: var(--fontSize);
   border-radius: var(--textMessageBorder);
   background: var(--textMessageBackground);
   border: none;
+  /* border-radius: 6px 5px 5px 2px; */
+  /* box-shadow: 1px 1px 1px 1px rgba(255, 255, 255, 1),
+    1px 1px 1px 1px rgba(255, 255, 255, 1); */
   color: var(--textMessageColor);
   text-align: left;
-  -webkit-font-smoothing: antialiased;
   min-height: 20px;
   overflow-wrap: break-word;
   white-space: pre-wrap;
   word-break: break-word;
-  /* margin: 0 !important; */
+  margin: 4px 10px;
 }

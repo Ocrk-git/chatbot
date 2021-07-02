@@ -4,6 +4,9 @@ export const USER_MESSAGE = "USER_MESSAGE";
 export const BOT_TEXT_MESSAGE = "BOT_TEXT_MESSAGE";
 export const BOT_QUICKREPLIES = "BOT_QUICKREPLIES";
 export const BOT_CARDS = "BOT_CARDS";
+export const BOT_IMAGE = "BOT_IMAGE";
+export const BOT_VIDEO = "BOT_VIDEO";
+
 export const BOT_SENDING = "BOT_SENDING";
 export const HOME_BUTTON = "HOME_BUTTON";
 export const HIDE_QUICK_REPLIES = "HIDE_QUICK_REPLIES";

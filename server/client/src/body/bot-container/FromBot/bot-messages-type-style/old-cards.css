@@ -1,0 +1,139 @@
+.cards {
+  display: flex;
+  flex-direction: column;
+  /* height: auto; */
+  margin: 4px 10px;
+}
+
+.carousel {
+  overflow: hidden;
+  max-width: 75%;
+  position: relative;
+  /* margin: 10px 0 10px 0px; */
+
+  /* .............. */
+  position: relative;
+  /* float: left; */
+  /* font-weight: 400; */
+  /* font-size: 13px; */
+  /* margin-bottom: 5px; */
+  text-align: left;
+  -webkit-font-smoothing: antialiased;
+  /* height: auto; */
+  overflow-wrap: break-word;
+  /* white-space: nowrap; */
+  /* color: rgb(38, 50, 56); */
+  background: rgb(255, 255, 255);
+  border: 1px solid rgb(230, 232, 234);
+  display: -webkit-box;
+  padding: 0;
+  border-radius: 10px;
+  /* line-height: 19px; */
+  min-width: 260px;
+  word-break: break-word;
+}
+.carousel .from-icon {
+  display: flex;
+}
+
+.carousel__item .title h6 {
+  font-size: 14px;
+  font-weight: 500;
+  padding: 10px;
+}
+
+.carousel__item .title p {
+  font-size: 13px;
+  /* padding: 10px; */
+  margin: 10px;
+}
+
+.cards-stepper {
+  bottom: 0;
+  text-align: center;
+}
+
+.carousel .carousel__item,
+.carousel .carousel__item--hidden {
+  display: none;
+}
+
+.carousel .carousel__item img {
+  /* display: ; */
+  width: 100%;
+  max-width: 600px;
+  height: 160px;
+  border-radius: 10px;
+}
+
+.carousel .carousel__item--visible {
+  display: block;
+  animation: fadeVisibility 1s;
+}
+
+.carousel .carousel__actions {
+  display: flex;
+  width: 100%;
+
+  justify-content: space-between;
+  position: absolute;
+  top: 25%;
+  transform: translateY(-50%);
+}
+
+.carousel .carousel__actions button {
+  border-radius: 50px;
+  border: 0;
+  outline: none;
+  /* box-shadow: rgba(255, 0, 0, 0.8); */
+  font-weight: bold;
+  cursor: pointer;
+  width: 30px;
+  height: 30px;
+  background-color: rgba(255, 255, 255, 0.774);
+}
+
+.carousel .carousel__actions button:hover {
+  background-color: rgb(255, 255, 255);
+  /* box-shadow: 10px 10px 10px 10px rgb(85, 85, 85); */
+  border: 0.5px solid rgba(0, 0, 0, 0.301);
+}
+
+.carousel .carousel__actions button#carousel__button--prev {
+  margin-left: 5px;
+  /* padding-top: 3px; */
+  font-size: large;
+  opacity: 0.6;
+}
+
+.carousel .carousel__actions button#carousel__button--next {
+  margin-right: 5px;
+  /* padding-top: 3px; */
+  font-size: large;
+  opacity: 0.6;
+}
+
+.carousel .carousel__actions button#carousel__button--prev:hover,
+.carousel .carousel__actions button#carousel__button--next:hover {
+  opacity: 1;
+}
+
+/* .carousel .carousel__actions button#carousel__button--next {
+	opacity: 1;
+} */
+
+@keyframes fadeVisibility {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+    transform: opacity linear;
+  }
+}
+
+.card-buttons {
+  display: flex;
+  justify-content: center;
+  margin: 10px 0 0;
+}
