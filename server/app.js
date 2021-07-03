@@ -76,8 +76,8 @@ io.on("connection", async (socket) => {
       message: encryptedBotWelcomeMessage,
     },
   });
-  await newUser.save();
-  socket.emit("welcome", encryptedBotWelcomeMessage);
+  let newUserFromDB = await newUser.save();
+  socket.emit("welcome", newUserFromDB.conversation[0]);
 
   socket.on("sendMessage", async (userMessage, callback) => {
     await MessageUpdateInDB("user", userMessage, sender);
@@ -90,8 +90,12 @@ io.on("connection", async (socket) => {
       cryptoSecretKey
     ).toString();
     console.log("bot Message", encryptedBotMessage);
-    await MessageUpdateInDB("bot", encryptedBotMessage, sender);
-    socket.emit("botMessage", encryptedBotMessage);
+    let botMessageFromDB = await MessageUpdateInDB("bot", encryptedBotMessage, sender);
+    console.log("Bot message before emit", botMessageFromDB.message)
+    console.log("Bot message check",encryptedBotMessage)
+    // Have to use this after jilani's 
+    socket.emit("botMessage", botMessageFromDB)
+
   });
 
   //sending default message

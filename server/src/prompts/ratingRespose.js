@@ -14,14 +14,19 @@ const context = (senderId) => {
             }
             else {
                 result = JSON.parse(result)
-                console.log("context from prompt", result)
-                const userName = result['context'].find((step)=>{
-                    if(step.stepName = 'ask-name'){
+                const rating = result['context'].find((step)=>{
+                    if(step.stepName = 'ask-feedback'){
                         return step.stepValue
                     }
                 })
-                const userMsg = `Hope you are doing great ${userName.stepValue}, Please provide your mobile number.`
-                resolve([sendTextMessage(userMsg)])
+                let response =''
+                if(rating > 4){
+                    response = "Thanks! we are glad you had a Great experience 😊"
+                }
+                else {
+                    response = "We are sorry we didn't live upto your expectations. we will definetly try to improve"
+                }
+                resolve([sendTextMessage(response)])
             }
         })
     })
