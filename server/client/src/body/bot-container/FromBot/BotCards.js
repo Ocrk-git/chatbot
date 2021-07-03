@@ -1,7 +1,9 @@
 import React from "react";
+import { connect } from "react-redux";
+import { addMessages, userActionMessage } from "../../../actions/userMessageAction";
+import { botTypingMessageAction } from "../../../actions/botMessageActions";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "./bot-messages-type-style/cards.css";
-
 // import Swiper core and required modules
 import SwiperCore, {
   Navigation,
@@ -11,32 +13,50 @@ import SwiperCore, {
   Autoplay,
   Keyboard,
 } from "swiper/core";
-
 // Import Swiper styles
-
 import "swiper/swiper.min.css";
 import "swiper/components/pagination/pagination.min.css";
 import "swiper/components/navigation/navigation.min.css";
-
 SwiperCore.use([Navigation, Pagination, Scrollbar, A11y, Autoplay, Keyboard]);
-
 // install Swiper modules
-
-const BotCards = ({ cards, hide, image, options }) => {
+const BotCards = ({
+  cards,
+  hide,
+  image,
+  options,
+  addMessages,
+  userActionMessage,
+  botTypingMessageAction,
+}) => {
+  const sendInputHandler = (event) => {
+    console.log(event.target.innerHTML, "REPLY SELECTED");
+    event.preventDefault();
+    addMessages(event.target.innerHTML);
+    userActionMessage(event.target.value);
+    botTypingMessageAction();
+  };
   console.log(options, "CARDS OPTIONS");
   const slides = [];
   for (let i = 0; i < cards.length; i++) {
+    console.log(cards[i].image, "Cards");
     slides.push(
       <div className='swiper-container' key={i}>
         <SwiperSlide key={`slide-${i}`} tag='li'>
           <div className='item__img'>
-            <img src={cards[i].image} alt='' />
-            <p className='card-title'>{cards[i].title}</p>
-            <p className='card-description'>{cards[i].description}</p>
+            {cards[i].image && <img src={cards[i].image} alt='' />}
+            {cards[i].title && <p className='card-title'>{cards[i].title}</p>}
+            {cards[i].description && (
+              <p className='card-description'>{cards[i].description}</p>
+            )}
             <div className='card__buttons'>
               {cards[i].actions &&
                 cards[i].actions.map((action, index) => (
-                  <button key={index} className='action-buttons'>
+                  <button
+                    value={action.text}
+                    key={index}
+                    className='action-buttons'
+                    onClick={sendInputHandler}
+                  >
                     {action.title}
                   </button>
                 ))}
@@ -46,7 +66,6 @@ const BotCards = ({ cards, hide, image, options }) => {
       </div>
     );
   }
-
   return (
     <div className='from-bot'>
       <div className='bot-icon-messages'>
@@ -96,5 +115,8 @@ const BotCards = ({ cards, hide, image, options }) => {
     </div>
   );
 };
-
-export default BotCards;
+export default connect(null, {
+  addMessages,
+  userActionMessage,
+  botTypingMessageAction,
+})(BotCards);

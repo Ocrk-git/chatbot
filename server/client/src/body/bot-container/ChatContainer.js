@@ -65,6 +65,7 @@ const ChatContainer = ({ messages, showBotTyping, homeButtonState }) => {
                 />
               );
             } else if (item.type === "quickReply") {
+              console.log("quickReply Item",item)
               return (
                 <BotQuickReplies
                   key={index}
@@ -97,6 +98,7 @@ const ChatContainer = ({ messages, showBotTyping, homeButtonState }) => {
                 />
               );
             } else if (item.type === "image") {
+              console.log("Item",item);
               return (
                 <BotImage
                   key={index}

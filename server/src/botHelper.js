@@ -10,6 +10,7 @@ function App(sender, utterance) {
     this.context = {}
     this.predict = async (utterance) => {
         prediction = await pullIntent(utterance)
+        // console.log("prediction===>",prediction)
         return prediction
     }
     this.prediction = this.predict(utterance)

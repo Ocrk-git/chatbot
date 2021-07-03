@@ -6,18 +6,19 @@ import {
   botTextMessage,
   botQuickReplies,
   botCards,
+  botImage,
+  botVideo,
 } from "./actions/botMessageActions";
 import { homeButton } from "./actions/userMessageAction";
-
 import { botTypingMessageAction } from "./actions/botMessageActions";
-
 let socket;
-
 const cryptoSecretKey = process.env.REACT_APP_CRYPTO_SECRET_KEY;
 // console.log(process.env);
 const Socket = ({
   userMessage,
   botCards,
+  botImage,
+  botVideo,
   botQuickReplies,
   botTextMessage,
   homeButton,
@@ -27,7 +28,6 @@ const Socket = ({
   const endPoint = "http://localhost:5000";
   // console.log("executing socket component");
   const [data, setData] = useState(true);
-
   useEffect(() => {
     socket = io(endPoint, {
       transports: ["websocket"],
@@ -35,8 +35,10 @@ const Socket = ({
     socket.on("welcome", (botMessage) => {
       console.log("Welcome Message from app.js", botMessage);
       var bytes = crypto.AES.decrypt(botMessage.message, cryptoSecretKey);
-      var decrptedBotWelcomeMessage = JSON.parse(bytes.toString(crypto.enc.Utf8));
-      const messages = decrptedBotWelcomeMessage
+      var decrptedBotWelcomeMessage = JSON.parse(
+        bytes.toString(crypto.enc.Utf8)
+      );
+      const messages = decrptedBotWelcomeMessage;
       if (messages) {
         for (let message of messages) {
           if (message.type === "text") {
@@ -55,9 +57,7 @@ const Socket = ({
     return () => {};
     //eslint-disable-next-line
   }, [endPoint]);
-
   // Sending user message to bot
-
   useEffect(() => {
     if (userMessage) {
       var encryptedMessage = crypto.AES.encrypt(
@@ -70,7 +70,6 @@ const Socket = ({
     if (data) {
       // console.log("is data in pipeline");
       setData(false);
-
       // Receiving message from bot
       socket.on("botMessage", async (botMessages) => {
         console.log(botMessages, "bot message");
@@ -91,9 +90,10 @@ const Socket = ({
                 } else if (messages[i].type === "cards") {
                   await botCards(messages[i]);
                 } else if (messages[i].type === "image") {
-                  await botCards(messages[i]);
+                  await botImage(messages[i]);
                 } else if (messages[i].type === "video") {
-                  await botCards(messages[i]);
+                  console.log("Message",messages[i])
+                  await botVideo(messages[i]);
                 } else {
                   return null;
                 }
@@ -112,13 +112,10 @@ const Socket = ({
         }
       });
     }
-
     // return () => {};
     //eslint-disable-next-line
   }, [userMessage]);
-
   //On clicking home button
-
   useEffect(() => {
     if (homeButtonClick) {
       // console.log(homeButtonClick, "HOME BUTTON IS:");
@@ -127,7 +124,6 @@ const Socket = ({
     }
     //eslint-disable-next-line
   }, [homeButtonClick]);
-
   return <Fragment> </Fragment>;
 };
 const mapStateToProps = (state) => ({
@@ -138,6 +134,8 @@ export default connect(mapStateToProps, {
   botTextMessage,
   botQuickReplies,
   botCards,
+  botImage,
+  botVideo,
   homeButton,
   botTypingMessageAction,
 })(Socket);

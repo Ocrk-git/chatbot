@@ -2,6 +2,7 @@ import {
   GET_MESSAGES,
   ADD_MESSAGES,
   USER_MESSAGE,
+  USER_ACTION_MESSAGE,
   HOME_BUTTON,
   USER_MESSAGE_SENT,
   HIDE_QUICK_REPLIES,
@@ -22,6 +23,12 @@ export const addMessages = (message) => (dispatch) => {
 export const userMessage = (message) => (dispatch) => {
   dispatch({
     type: USER_MESSAGE,
+    payload: message,
+  });
+};
+export const userActionMessage = (message) => (dispatch) => {
+  dispatch({
+    type: USER_ACTION_MESSAGE,
     payload: message,
   });
 };

@@ -16,20 +16,22 @@ const sendCards = (message) => {
   return {
     type: "cards",
     message,
+    options: {},
   };
 };
 
 const sendImage = (message) => {
+  console.log("In send  image function",message);
   return {
     type: "image",
-    message: message,
+    url: message,
   };
 };
 
 const sendVideo = (message) => {
   return {
     type: "video",
-    message: message,
+    url: message,
   };
 };
 

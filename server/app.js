@@ -10,7 +10,7 @@ const userDb = require("../server/src/db/dbModels/userModel");
 const client = require("./src/utils/context.js");
 const botResponse = require("./src/botResponse");
 const MessageUpdateInDB = require("../server/src/utils/updateMessageInDB");
-const { sendQuickReply } = require("./src/utils/messageObject");
+const { sendQuickReply, sendTextMessage, sendCards } = require("./src/utils/messageObject");
 const app = express();
 const server = http.createServer(app);
 const io = socketio(server);
@@ -41,31 +41,62 @@ client.on("error", (err) => {
 
 io.on("connection", async (socket) => {
   const sender = socket.id;
-  console.log("secret key", process.env.CRYPTO_SECRET_KEY);
+  // console.log("secret key", process.env.CRYPTO_SECRET_KEY);
   console.log("new web socket connection", sender);
   const startTime = new Date();
 
-  const welcomeMessage = {
-    title:
-      "Hello! I am Edith, your virtual assistant for Entiretyin. How can I help you?",
-    options: [
-      {
-        title: "Raise Ticket",
-        text: "Raise Ticket",
-      },
-      {
-        title: "View Ticket Status",
-        text: "View Ticket Status",
-      },
-      {
-        title: "Frequently Asked Questions",
-        text: "Frequently Asked Questions",
-      },
-    ],
-  };
+  const welcomeMessage = [
+    sendTextMessage("Hi, Welcome to Bhavani constructions, I'm Maya, your didgital asisstant. I am here to assistant. I'm here to assist you with finding your dream home."),
+    sendTextMessage("we have the following projects in nellore. Please select the project of your choice"),
+    sendCards([{
+      "title": "Bhavani Sky Towers",
+      "description": "Bhavani Sky Towers is a two and three-bedroom ultra-luxury condominium project located in Iscon city main road, Kondayapalem.",
+      "image": "https://cdn-bpljh.nitrocdn.com/GdpbhucsrDZBHKmQRSosxAjFIZYsjtdX/assets/static/optimized/rev-22abcd0/wp-content/uploads/2020/07/bhavani-sky-towers-1.jpg",
+      "actions": [
+        {
+          "title": "Know more",
+          "text": "Bhavani sky towers more"
+        },
+        {
+          "title": "Intrested",
+          "text": "intrested"
+        }
+      ]
+    },
+    {
+      "title": "Bhavani Newtown",
+      "description": "Discover smart living across 36+ exquisite villas spread across 3 lush acres in phase - 1, designed for the complete family and are sensitive to the needs of children and the elderly located in Dhanalakshmipuram.",
+      "image": "https://cdn-bpljh.nitrocdn.com/GdpbhucsrDZBHKmQRSosxAjFIZYsjtdX/assets/static/optimized/rev-22abcd0/wp-content/uploads/2021/04/8-1.png",
+      "actions": [
+        {
+          "title": "Know more",
+          "text": "Bhavani Newtown more"
+        },
+        {
+          "title": "Intrested",
+          "text": "intrested"
+        }
+      ]
+    },
+    {
+      "title": "Bhavani Fortune Prime",
+      "description": "Discover boutique lifestyle 3BHK apartments located in Children's park road, Jagadeesh Nagar",
+      "image": "https://cdn-bpljh.nitrocdn.com/GdpbhucsrDZBHKmQRSosxAjFIZYsjtdX/assets/static/optimized/rev-22abcd0/wp-content/uploads/2021/04/9.png",
+      "actions": [
+        {
+          "title": "Know more",
+          "text": "Bhavani Fortune Prime more"
+        },
+        {
+          "title": "Intrested",
+          "text": "intrested"
+        }
+      ]
+    }])
+  ]
 
   var encryptedBotWelcomeMessage = await crypto.AES.encrypt(
-    JSON.stringify([sendQuickReply(welcomeMessage)]),
+    JSON.stringify(welcomeMessage),
     cryptoSecretKey
   ).toString();
   const newUser = new userDb({
@@ -85,14 +116,15 @@ io.on("connection", async (socket) => {
     var decrptedUserMessage = bytes.toString(crypto.enc.Utf8);
     console.log("decrypted message", decrptedUserMessage);
     const botMessage = await botResponse(decrptedUserMessage, sender);
+    // console.log("Message", JSON.stringify(botMessage));
     var encryptedBotMessage = await crypto.AES.encrypt(
       JSON.stringify(botMessage),
       cryptoSecretKey
     ).toString();
-    console.log("bot Message", encryptedBotMessage);
+    // console.log("bot Message", encryptedBotMessage);
     let botMessageFromDB = await MessageUpdateInDB("bot", encryptedBotMessage, sender);
-    console.log("Bot message before emit", botMessageFromDB.message)
-    console.log("Bot message check",encryptedBotMessage)
+    // console.log("Bot message before emit", botMessageFromDB.message)
+    // console.log("Bot message check",encryptedBotMessage)
     // Have to use this after jilani's 
     socket.emit("botMessage", botMessageFromDB)
 

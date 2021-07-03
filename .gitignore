@@ -1,3 +1,6 @@
 config
 node_modules
+.vscode
+package-lock.json
 __pycache__
+config.pth

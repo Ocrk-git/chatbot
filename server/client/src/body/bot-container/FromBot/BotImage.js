@@ -5,11 +5,11 @@ const BotImage = ({ image, hide, imageItem }) => {
     <div className='from-bot'>
       <div className='bot-icon-messages'>
         {!hide && <img className='message-icon' src={image} alt='logo' />}
-        <img
+        {/* <img
           className='message-icon'
           src='https://cdn.yellowmessenger.com/6z2kqCtJ8pOr1611815647456.png'
           alt='logo'
-        />
+        /> */}
       </div>
       <div className='image'>
         <img src={imageItem} alt='' />
