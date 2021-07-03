@@ -6,6 +6,7 @@ import BotQuickReplies from "./FromBot/BotQuickReplies";
 import BotCards from "./FromBot/BotCards";
 import BotVideo from "./FromBot/BotVideo";
 import BotImage from "./FromBot/BotImage";
+import BotRating from "./FromBot/BotRating";
 // import NewBotCards from "./FromBot/BotCards";
 
 // import ScrollToBottom from "react-scroll-to-bottom";
@@ -81,6 +82,7 @@ const ChatContainer = ({ messages, showBotTyping, homeButtonState }) => {
                   item={index}
                   cards={item.cards}
                   hide={item.hide}
+                  options={item.options}
                   image='https://cdn.yellowmessenger.com/6z2kqCtJ8pOr1611815647456.png'
                 />
               );
@@ -101,6 +103,16 @@ const ChatContainer = ({ messages, showBotTyping, homeButtonState }) => {
                   item={index}
                   hide={item.hide}
                   imageItem={item.image}
+                  image='https://cdn.yellowmessenger.com/6z2kqCtJ8pOr1611815647456.png'
+                />
+              );
+            } else if (item.type === "rating") {
+              return (
+                <BotRating
+                  key={index}
+                  item={index}
+                  hide={item.hide}
+                  options={item.options}
                   image='https://cdn.yellowmessenger.com/6z2kqCtJ8pOr1611815647456.png'
                 />
               );

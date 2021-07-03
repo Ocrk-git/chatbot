@@ -22,6 +22,10 @@ const User = mongoose.model('User', {
         },
         message : {
             type : String
+        },
+        timeStamp : {
+            type : Date,
+            default : Date.now
         }
     }]
 })

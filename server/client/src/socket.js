@@ -33,12 +33,10 @@ const Socket = ({
       transports: ["websocket"],
     });
     socket.on("welcome", (botMessage) => {
-      // console.log("Welcome Message from app.js", botMessage);
-      var bytes = crypto.AES.decrypt(botMessage, cryptoSecretKey);
-      var decrptedBotWelcomeMessage = JSON.parse(
-        bytes.toString(crypto.enc.Utf8)
-      );
-      const messages = decrptedBotWelcomeMessage;
+      console.log("Welcome Message from app.js", botMessage);
+      var bytes = crypto.AES.decrypt(botMessage.message, cryptoSecretKey);
+      var decrptedBotWelcomeMessage = JSON.parse(bytes.toString(crypto.enc.Utf8));
+      const messages = decrptedBotWelcomeMessage
       if (messages) {
         for (let message of messages) {
           if (message.type === "text") {
@@ -75,8 +73,8 @@ const Socket = ({
 
       // Receiving message from bot
       socket.on("botMessage", async (botMessages) => {
-        // console.log(botMessages, "bot message");
-        var bytes = crypto.AES.decrypt(botMessages, cryptoSecretKey);
+        console.log(botMessages, "bot message");
+        var bytes = crypto.AES.decrypt(botMessages.message, cryptoSecretKey);
         var decrptedBotMessage = JSON.parse(bytes.toString(crypto.enc.Utf8));
         // console.log(decrptedBotMessage, "decrypted bot message");
         const messages = decrptedBotMessage;
