@@ -1,28 +1,39 @@
 .qrs {
-  margin: 8px 8px 10px 75px;
+  /* margin: 8px 8px 10px 75px; */
+  margin-left: 45px;
 }
 
 .quickReplie {
-    flex-direction: column;
-    padding: 9px 12px;
-    border: var(--quicRepliesBorder);
-    border-radius: var(--quickReplesBorderRadius);
-    color: var(--quickRepliesColor);
-    margin: 2px;
-    cursor: pointer;
-    background: rgb(255, 255, 255);
-    font-size: var(--fontSize);
-    outline: none;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-    position: relative;
-    max-width: 280px;
-    width: var(--quickRepliesWidth);
-    align-items: center;
-  }
-  
-  .quickReplie:hover {
-    background: rgb(0, 0, 0);
-    color: aliceblue;
-  }
+  display: flex;
+  /* flex-direction: row; */
+  float: left;
+  align-items: flex-start;
+  justify-content: center;
+  line-height: 19px;
+  padding: 8px 14px;
+  border: var(--quicRepliesBorder);
+  border-radius: var(--quickReplesBorderRadius);
+  /* background-color: transparent !important; */
+  border: 1px solid rgba(0, 0, 0, 0.4) !important;
+  /* box-sizing: border-box;
+  box-shadow: 0 2px 5px 0 rgb(0 0 0 / 16%), 0 2px 10px 0 rgb(0 0 0 / 12%); */
+  /* box-shadow: 0 1px 1px 1px rgba(0, 0, 0, 0.1), 0 1px 1px 1px rgba(0, 0, 0, 0.2); */
+
+  color: var(--quickRepliesColor);
+
+  margin: 4px 5px 4px 0px;
+  cursor: pointer;
+  background: rgb(255, 255, 255);
+  font-size: var(--fontSize);
+  outline: none;
+  /* overflow: hidden; */
+  width: auto;
+  /* position: relative; */
+  /* max-width: 280px; */
+  /* width: var(--quickRepliesWidth); */
+}
+
+.quickReplie:hover {
+  background: rgb(0, 0, 0);
+  color: aliceblue;
+}

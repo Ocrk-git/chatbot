@@ -1,5 +1,5 @@
 import "./App.css";
-import React, { useState, useEffect } from "react";
+import React, { useState, Fragment } from "react";
 import Widget from "./widget/widget";
 import Body from "./body/Body";
 import { Provider } from "react-redux";
@@ -11,38 +11,29 @@ const App = () => {
   const [open, setOpen] = useState(false);
 
   const [icon, setIcon] = useState(
-    "https://cdn.yellowmessenger.com/DXw9dTgmHz9E1616494721521.gif"
+    "https://cdn.yellowmessenger.com/6z2kqCtJ8pOr1611815647456.png"
   );
   const toggleWidgetHandler = () => {
     if (open) {
       setOpen(false);
-      setIcon("https://cdn.yellowmessenger.com/DXw9dTgmHz9E1616494721521.gif");
+      setIcon("https://cdn.yellowmessenger.com/6z2kqCtJ8pOr1611815647456.png");
     } else {
       setOpen(true);
-      setIcon("https://static.thenounproject.com/png/57781-200.png");
+      setIcon("https://cdn.yellowmessenger.com/6z2kqCtJ8pOr1611815647456.png");
     }
   };
 
-  useEffect(() => {
-    const script = document.createElement("script");
-    console.log("ATTACHING YM");
-    script.src = "https://app.yellowmessenger.com/api/chat/demo/x1612163880209";
-    script.async = true;
-
-    document.body.appendChild(script);
-  }, []);
-
   return (
-    <Provider store={store}>
-      {/* <Analytics/>   */}
-
-      <div className='bot'>
+    <Fragment>
+      <Provider store={store}>
+        {/* <Analytics/>   */}
+        {/* <div className='bot'> */}
         <Socket />
-        <ymfile />
-        <Widget toggle={toggleWidgetHandler} image={icon} />
-        {open && <Body />}
-      </div>
-    </Provider>
+        {!open && <Widget toggle={toggleWidgetHandler} image={icon} />}
+        {open && <Body toggle={toggleWidgetHandler} />}
+        {/* </div> */}
+      </Provider>
+    </Fragment>
   );
 };
 

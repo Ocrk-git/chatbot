@@ -1,4 +1,4 @@
-import crypto from "crypto-js"
+import crypto from "crypto-js";
 import React, { useEffect, useState, Fragment } from "react";
 import io from "socket.io-client";
 import { connect } from "react-redux";
@@ -13,8 +13,8 @@ import { botTypingMessageAction } from "./actions/botMessageActions";
 
 let socket;
 
-const cryptoSecretKey = process.env.REACT_APP_CRYPTO_SECRET_KEY
-console.log(process.env)
+const cryptoSecretKey = process.env.REACT_APP_CRYPTO_SECRET_KEY;
+// console.log(process.env);
 const Socket = ({
   userMessage,
   botCards,
@@ -52,7 +52,7 @@ const Socket = ({
         }
       }
     });
-    return () => { };
+    return () => {};
     //eslint-disable-next-line
   }, [endPoint]);
 
@@ -60,12 +60,15 @@ const Socket = ({
 
   useEffect(() => {
     if (userMessage) {
-      var encryptedMessage = crypto.AES.encrypt(userMessage, cryptoSecretKey).toString();
+      var encryptedMessage = crypto.AES.encrypt(
+        userMessage,
+        cryptoSecretKey
+      ).toString();
       // console.log("This is encrypted from client side (user message)", encryptedMessage);
       socket.emit("sendMessage", encryptedMessage);
     }
     if (data) {
-      console.log("is data in pipeline");
+      // console.log("is data in pipeline");
       setData(false);
 
       // Receiving message from bot
@@ -73,8 +76,8 @@ const Socket = ({
         console.log(botMessages, "bot message");
         var bytes = crypto.AES.decrypt(botMessages.message, cryptoSecretKey);
         var decrptedBotMessage = JSON.parse(bytes.toString(crypto.enc.Utf8));
-        console.log(decrptedBotMessage, "decrypted bot message");
-        const messages = decrptedBotMessage
+        // console.log(decrptedBotMessage, "decrypted bot message");
+        const messages = decrptedBotMessage;
         if (messages) {
           var interval = 1 * 1000; // 10 seconds;
           for (var i = 0; i <= messages.length - 1; i++) {
@@ -83,9 +86,13 @@ const Socket = ({
                 if (messages[i].type === "text") {
                   await botTextMessage(messages[i]);
                 } else if (messages[i].type === "quickReply") {
-                  console.log(messages[i], "quick replies");
+                  // console.log(messages[i], "quick replies");
                   await botQuickReplies(messages[i]);
                 } else if (messages[i].type === "cards") {
+                  await botCards(messages[i]);
+                } else if (messages[i].type === "image") {
+                  await botCards(messages[i]);
+                } else if (messages[i].type === "video") {
                   await botCards(messages[i]);
                 } else {
                   return null;
@@ -95,19 +102,6 @@ const Socket = ({
               i
             );
           }
-
-          // for (let message of messages) {
-          //   if (message.type === "text") {
-          //     botTextMessage(message);
-          //   } else if (message.type === "quickReply") {
-          //     console.log(message, "quick replies");
-          //     botQuickReplies(message);
-          //   } else if (message.type === "cards") {
-          //     botCards(message);
-          //   } else {
-          //     return null;
-          //   }
-          // }
           if (messages.length === 1) {
             botTypingMessageAction();
           } else {
@@ -127,12 +121,12 @@ const Socket = ({
 
   useEffect(() => {
     if (homeButtonClick) {
-      console.log(homeButtonClick, 'HOME BUTTON IS:');
+      // console.log(homeButtonClick, "HOME BUTTON IS:");
       socket.emit("ocrk_home");
-      homeButton()
+      homeButton();
     }
-  }, [homeButtonClick])
-
+    //eslint-disable-next-line
+  }, [homeButtonClick]);
 
   return <Fragment> </Fragment>;
 };

@@ -1,16 +1,16 @@
 import React from "react";
 import "./bot-messages-type-style/textMessage.css";
 
-const BotTextMessage = (props) => {
+const BotTextMessage = ({ image, message, hide }) => {
   // const [keys, setKeys] = useState([]);
-  var image = <img className='message-icon' src={props.image} alt='logo' />;
-  var noImage = <div className='hide-message-icon' />;
 
   return (
     <div className='from-bot'>
-      {props.hide ? noImage : image}
+      <div className='bot-icon-messages'>
+        {!hide && <img className='message-icon' src={image} alt='logo' />}
+      </div>
       <div className='text-message'>
-        <p>{props.message}</p>
+        <p>{message}</p>
       </div>
     </div>
   );
