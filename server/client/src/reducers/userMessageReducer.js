@@ -1,5 +1,6 @@
 import {
   USER_MESSAGE,
+  USER_ACTION_MESSAGE,
   BOT_SENDING,
   HOME_BUTTON,
   USER_MESSAGE_SENT,
@@ -21,6 +22,12 @@ const userMessage = (state = initialState, action) => {
         userMessageDelivered: true,
         hideQuickRepliesButton: true,
       };
+      case USER_ACTION_MESSAGE:
+        return {
+          userMessage: action.payload,
+          userMessageDelivered: true,
+          // hideQuickRepliesButton: true,
+        };
     case BOT_SENDING:
       return {
         ...state,

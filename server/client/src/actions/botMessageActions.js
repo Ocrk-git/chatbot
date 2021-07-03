@@ -6,6 +6,7 @@ import {
   BOT_VIDEO,
   BOT_SENDING,
   BOT_TYPING_BUBBLE,
+  BOT_RATING
 } from "../types/types";
 
 export const botTextMessage = (message) => (dispatch) => {
@@ -37,6 +38,13 @@ export const botImage = (message) => (dispatch) => {
 export const botVideo = (message) => (dispatch) => {
   dispatch({
     type: BOT_VIDEO,
+    payload: message,
+  });
+};
+
+export const botStarRating = (message) => (dispatch) => {
+  dispatch({
+    type: BOT_RATING,
     payload: message,
   });
 };

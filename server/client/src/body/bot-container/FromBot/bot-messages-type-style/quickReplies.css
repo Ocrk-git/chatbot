@@ -27,7 +27,7 @@
   font-size: var(--fontSize);
   outline: none;
   /* overflow: hidden; */
-  width: auto;
+  width: 230px;
   /* position: relative; */
   /* max-width: 280px; */
   /* width: var(--quickRepliesWidth); */

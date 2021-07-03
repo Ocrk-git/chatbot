@@ -16,6 +16,7 @@ const botResponse = (userMessage, sender) => {
     return new Promise(async resolve => {
         const app = new App(sender, userMessage)
         const prediction = await app.predict(userMessage)
+        console.log("confidence", prediction.confidence)
         if (prediction.confidence > app.minConfidence) {
             try {
                 // Fetch journey flow from the DB
@@ -29,10 +30,11 @@ const botResponse = (userMessage, sender) => {
                     let prompts = context[currentStep]["prompt"]
                     let messageArray = []
                     await asyncForEach(prompts, async (prompt, index) => {
-                        const toSendMessage = await sendMessage(prompt, sender)
+                        const toSendMessage = await sendMessage(prompt, sender, app)
                         // console.log("To send Message variable",JSON.stringify(toSendMessage))
                         messageArray.push(...toSendMessage)
                     });
+                    console.log("message array",messageArray)
                     resolve(messageArray)
                 }
                 catch (e) {
@@ -74,7 +76,7 @@ const botResponse = (userMessage, sender) => {
                                         if (context.length > 1) {
                                             let prompts = context[currentStep]["prompt"]
                                             await asyncForEach(prompts, async (prompt, index) => {
-                                                const toSendMessage = await sendMessage(prompt, sender)
+                                                const toSendMessage = await sendMessage(prompt, sender, app)
                                                 // console.log("To send Message variable",JSON.stringify(toSendMessage))
                                                 messageArray.push(...toSendMessage)
                                             });
@@ -120,7 +122,7 @@ const botResponse = (userMessage, sender) => {
                                 let prompts = context[currentStep]["prompt"]
                                 let messageArray = []
                                 await asyncForEach(prompts, async (prompt, index) => {
-                                    const toSendMessage = await sendMessage(prompt, sender)
+                                    const toSendMessage = await sendMessage(prompt, sender, app)
                                     // console.log("To send Message variable",JSON.stringify(toSendMessage))
                                     messageArray.push(...toSendMessage)
                                 });
@@ -140,7 +142,7 @@ const botResponse = (userMessage, sender) => {
                             let messageArray = []
 
                             await asyncForEach(prompts, async (prompt, index) => {
-                                const toSendMessage = await sendMessage(prompt, sender)
+                                const toSendMessage = await sendMessage(prompt, sender, app)
                                 // console.log("To send Message variable",JSON.stringify(toSendMessage))
                                 messageArray.push(...toSendMessage)
                             });
@@ -166,7 +168,7 @@ const botResponse = (userMessage, sender) => {
                             let prompts = context[currentStep]["prompt"]
                             let messageArray = []
                             await asyncForEach(prompts, async (prompt, index) => {
-                                const toSendMessage = await sendMessage(prompt, sender)
+                                const toSendMessage = await sendMessage(prompt, sender, app)
                                 // console.log("To send Message variable",JSON.stringify(toSendMessage))
                                 messageArray.push(...toSendMessage)
                             });

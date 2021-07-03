@@ -6,7 +6,7 @@
 
 .image img {
   max-height: 300px;
-
+  min-height: 100px;
   width: 270px;
   border-radius: 10px;
 }

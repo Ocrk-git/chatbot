@@ -5,6 +5,7 @@ import {
   BOT_CARDS,
   BOT_IMAGE,
   BOT_VIDEO,
+  BOT_RATING
 } from "../types/types";
 
 const initialState = {
@@ -153,6 +154,7 @@ const messageReducer = (state = initialState, action) => {
 
     case BOT_IMAGE:
       message = action.payload;
+      console.log("message==>",message);
       let addImage = {
         messageFrom: "bot",
         type: message.type,
@@ -172,13 +174,24 @@ const messageReducer = (state = initialState, action) => {
         messageFrom: "bot",
         type: message.type,
         // message: message.title,
-        // options: message.options,
+        options: message.options,
         cards: message.message,
       };
       return {
         ...state,
         messages: [...state.messages, addCards],
       };
+      case BOT_RATING:
+        message = action.payload;
+        let addRating = {
+          messageFrom: "bot",
+          type: message.type,
+          options: message.options,
+        }
+        return {
+          ...state,
+          messages: [...state.messages, addRating]
+        }
 
     default:
       return {
