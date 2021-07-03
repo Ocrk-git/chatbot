@@ -16,13 +16,15 @@ const botResponse = (userMessage, sender) => {
     return new Promise(async resolve => {
         const app = new App(sender, userMessage)
         const prediction = await app.predict(userMessage)
-        if (prediction.confidence > 0.85) {
+        if (prediction.confidence > app.minConfidence) {
             try {
                 // Fetch journey flow from the DB
                 try {
                     let context = await getJourneyFlow(prediction.intent)
                     let currentStep = 0
-                    client.setex(sender, 3600, JSON.stringify({ 'journey': prediction.intent, context, currentStep }));
+                    // client.setex(sender, 3600, JSON.stringify({ 'journey': prediction.intent, context, currentStep }));
+                    const newJourney = true
+                    await app.setContext(sender, { 'journey': prediction.intent, context, currentStep }, newJourney)
                     //Multiple prompts
                     let prompts = context[currentStep]["prompt"]
                     let messageArray = []
@@ -47,6 +49,7 @@ const botResponse = (userMessage, sender) => {
             client.get(sender, async (err, result) => {
                 if (result) {
                     result = JSON.parse(result)
+                    console.log("contect from redis", result)
                     let { currentStep, journey, context } = result
                     // Check if response is should be sent
                     if (currentStep == context.length - 2) {
@@ -54,20 +57,18 @@ const botResponse = (userMessage, sender) => {
                             const validator = require(validatorsPath + '/' + context[currentStep]["validator"])
                             const validatorResponse = await validator(userMessage)
                             if (validatorResponse.success) {
-                                client.del(sender)
+                                // client.del(sender)
                                 let response = context[context.length - 1]["response"]
                                 let messageArray = []
                                 await asyncForEach(response, async (responseObject, index) => {
                                     console.log("Response Object=============================================>", responseObject)
-                                    if (responseObject.type == 'text') {
-                                        const toSendMessage = await sendMessage(responseObject, sender)
-                                        messageArray.push(...toSendMessage)
-                                    }
-                                    else {
+                                    if (responseObject.type == 'intent') {
                                         let context = await getJourneyFlow(responseObject.value)
-                                        console.log("Context variable in trigger intent",context)
+                                        console.log("Context variable in trigger intent", context)
                                         let currentStep = 0
-                                        client.setex(sender, 3600, JSON.stringify({ 'journey': responseObject.value, context, currentStep }));
+                                        // client.setex(sender, 3600, JSON.stringify({ 'journey': responseObject.value, context, currentStep }));
+                                        const newJourney = true
+                                        await app.setContext(sender, { 'journey': responseObject.value, context, currentStep }, newJourney)
                                         //Multiple prompts
                                         if (context.length > 1) {
                                             let prompts = context[currentStep]["prompt"]
@@ -84,6 +85,10 @@ const botResponse = (userMessage, sender) => {
                                             });
                                         }
                                     }
+                                    else {
+                                        const toSendMessage = await sendMessage(responseObject, sender)
+                                        messageArray.push(...toSendMessage)
+                                    }
                                 })
                                 resolve(messageArray)
                             }
@@ -92,7 +97,7 @@ const botResponse = (userMessage, sender) => {
                             }
                         }
                         else {
-                            client.del(sender)
+                            // client.del(sender)
                             let message = context[context.length - 1]['response'][0].value
                             resolve([sendTextMessage(message)])
                         }
@@ -106,7 +111,8 @@ const botResponse = (userMessage, sender) => {
                             if (validatorResponse.success) {
                                 context[currentStep]["stepValue"] = validatorResponse.message
                                 currentStep += 1
-                                client.setex(sender, 3600, JSON.stringify({ journey, context, currentStep }))
+                                // client.setex(sender, 3600, JSON.stringify({ journey, context, currentStep }))
+                                await app.setContext(sender, { journey, context, currentStep })
                                 //Multiple prompts
                                 let prompts = context[currentStep]["prompt"]
                                 let messageArray = []
@@ -123,7 +129,8 @@ const botResponse = (userMessage, sender) => {
                         else {
                             context[currentStep]["stepValue"] = userMessage
                             currentStep += 1
-                            client.setex(sender, 3600, JSON.stringify({ journey, context, currentStep }))
+                            // client.setex(sender, 3600, JSON.stringify({ journey, context, currentStep }))
+                            await app.setContext(sender, { journey, context, currentStep })
                             //Multiple prompts
                             let prompts = context[currentStep]["prompt"]
                             let messageArray = []
@@ -148,7 +155,8 @@ const botResponse = (userMessage, sender) => {
                             let journeyDetails = JSON.parse(data)
                             let context = journeys[journeyDetails.journey]
                             let currentStep = 0
-                            client.setex(sender, 3600, JSON.stringify({ 'journey': journeyDetails.journey, context, currentStep }));
+                            // client.setex(sender, 3600, JSON.stringify({ 'journey': journeyDetails.journey, context, currentStep }));
+                            await app.setContext(sender, { "journey": journeyDetails.journey, context, currentStep })
                             //Multiple prompts
                             let prompts = context[currentStep]["prompt"]
                             let messageArray = []
