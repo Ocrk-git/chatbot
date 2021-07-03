@@ -19,7 +19,6 @@ const sendMessage = (prompt, senderId) => {
         }
         else if (prompt.type == "cards") {
             resolve([sendCards(prompt.value)])
-
         }
         else if (prompt.type == "image") {
             resolve([sendImage(prompt.value)])
@@ -27,7 +26,6 @@ const sendMessage = (prompt, senderId) => {
         }
         else if (prompt.type == "video") {
             resolve([sendVideo(prompt.value)])
-
         }
         else if (prompt.type == "function") {
             const promptFunction = require(promptsPath + '/' + prompt['value'])

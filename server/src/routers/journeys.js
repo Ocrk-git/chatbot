@@ -13,10 +13,15 @@ router.post('/journeys/:journeyName', async (req, res) => {
         const { journeyName } = req.params
         const journeySlug = journeyName.toLowerCase().split(" ").join("-")
         const { utterances, flow } = req.body
+        // console.log(typeof utterances)
 
         const getSlugs = ((stepName) => {
-            stepName.toLowerCase().split(" ").join("-")
+            return stepName.toLowerCase().split(" ").join("-")
         })
+
+        if (utterances && typeof utterances != "object") {
+            return res.status(400).send({ error: "Utterances must be an array" })
+        }
 
         if (flow) {
 
@@ -24,14 +29,11 @@ router.post('/journeys/:journeyName', async (req, res) => {
                 return res.status(400).send({ error: "Flow must be an array" })
             }
             const slugs = flow.slice(0, flow.length - 1).map(step => getSlugs(step.stepName))
+            console.log(slugs)
             const uniqueSlugs = [...new Set(slugs)]
             if (slugs.length != uniqueSlugs.length) {
                 return res.status(400).send({ error: "Steps names should be unique" })
             }
-        }
-
-        if (utterances && typeof utterances != object) {
-            return res.status(400).send({ error: "Utterances must be an array" })
         }
 
         const journey = new Journey({

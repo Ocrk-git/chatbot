@@ -28,6 +28,7 @@ const botResponse = (userMessage, sender) => {
                     let messageArray = []
                     await asyncForEach(prompts, async (prompt, index) => {
                         const toSendMessage = await sendMessage(prompt, sender)
+                        // console.log("To send Message variable",JSON.stringify(toSendMessage))
                         messageArray.push(...toSendMessage)
                     });
                     resolve(messageArray)
@@ -61,6 +62,7 @@ const botResponse = (userMessage, sender) => {
                                     console.log("Response Object=============================================>", responseObject)
                                     if (responseObject.type == 'text') {
                                         const toSendMessage = await sendMessage(responseObject, sender)
+                                        // console.log("To send Message variable",JSON.stringify(toSendMessage))
                                         messageArray.push(...toSendMessage)
                                     }
                                     else {
@@ -73,6 +75,7 @@ const botResponse = (userMessage, sender) => {
                                             let prompts = context[currentStep]["prompt"]
                                             await asyncForEach(prompts, async (prompt, index) => {
                                                 const toSendMessage = await sendMessage(prompt, sender)
+                                                // console.log("To send Message variable",JSON.stringify(toSendMessage))
                                                 messageArray.push(...toSendMessage)
                                             });
                                         }
@@ -80,6 +83,7 @@ const botResponse = (userMessage, sender) => {
                                             let responses = context[currentStep]["response"]
                                             await asyncForEach(responses, async (response, index) => {
                                                 const toSendMessage = await sendMessage(response, sender)
+                                                // console.log("To send Message variable",JSON.stringify(toSendMessage))
                                                 messageArray.push(...toSendMessage)
                                             });
                                         }
@@ -112,6 +116,7 @@ const botResponse = (userMessage, sender) => {
                                 let messageArray = []
                                 await asyncForEach(prompts, async (prompt, index) => {
                                     const toSendMessage = await sendMessage(prompt, sender)
+                                    // console.log("To send Message variable",JSON.stringify(toSendMessage))
                                     messageArray.push(...toSendMessage)
                                 });
                                 resolve(messageArray)
@@ -130,6 +135,7 @@ const botResponse = (userMessage, sender) => {
 
                             await asyncForEach(prompts, async (prompt, index) => {
                                 const toSendMessage = await sendMessage(prompt, sender)
+                                // console.log("To send Message variable",JSON.stringify(toSendMessage))
                                 messageArray.push(...toSendMessage)
                             });
                             resolve(messageArray)
@@ -154,6 +160,7 @@ const botResponse = (userMessage, sender) => {
                             let messageArray = []
                             await asyncForEach(prompts, async (prompt, index) => {
                                 const toSendMessage = await sendMessage(prompt, sender)
+                                // console.log("To send Message variable",JSON.stringify(toSendMessage))
                                 messageArray.push(...toSendMessage)
                             });
                             resolve(messageArray)
