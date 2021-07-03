@@ -1,0 +1,12 @@
+input[type="radio"] {
+  display: none;
+}
+
+.star-rating {
+  margin: 8px 10px;
+}
+.star {
+  margin: 0 4px;
+  cursor: pointer;
+  transition: color 200ms;
+}

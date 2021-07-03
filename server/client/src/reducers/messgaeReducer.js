@@ -9,74 +9,88 @@ import {
 
 const initialState = {
   messages: [
-    {
-      messageFrom: "bot",
-      type: "cards",
-      cards: [
-        {
-          image:
-            "http://eatwelltraveleverywhere.com/wp-content/uploads/2017/10/At.mosphere.jpg",
-          title: "Banking",
-          description:
-            "Banking is an industry that handles cash, credit, and other financial transactions. Banks provide a safe place to store extra cash and credit.",
-          actions: [
-            {
-              title: "Bhaskar",
-              text: "button1",
-              url: "",
-            },
-            {
-              title: "Nandanna",
-              text: "button2",
-              url: "",
-            },
-            {
-              title: "Dheeraj Anna",
-              text: "text",
-              url: "https://github.com/Ocrk-git/chatbot",
-            },
-          ],
-        },
-        {
-          image:
-            "https://i.pinimg.com/originals/39/47/03/394703864ace3f7c7fe232077f7d12f7.jpg",
-          title: "Finance",
-          description:
-            "Using the Hello World guide, you’ll start a branch, write comments, and open a pull request.",
-          actions: [
-            {
-              title: "Dheeraj Anna",
-              text: "text",
-              url: "https://github.com/Ocrk-git/chatbot",
-            },
-          ],
-        },
-
-        {
-          image: "https://images.unsplash.com/photo-1537996194471-e657df975ab4",
-          title: "Insurance",
-          description:
-            "This is essentially a back/next button positioned correctly. You must implement the textual description yourself, however, an example is provided below for reference.",
-        },
-      ],
-    },
-
+    // {
+    //   messageFrom: "bot",
+    //   type: "cards",
+    //   options: {
+    // loop: false,
+    // autoHeight: true,
+    // keyboardChanging: false,
+    // scrollbarDraggable: false,
+    // autoplay: {
+    //   delay: 2000,
+    //   disableOnInteraction: false,
+    // },
+    // },
+    // cards: [
+    // {
+    //   image:
+    //     "http://eatwelltraveleverywhere.com/wp-content/uploads/2017/10/At.mosphere.jpg",
+    //   title: "Banking",
+    //   description:
+    //     "Banking is an industry\n that handles cash, credit, and other financial transactions. Banks provide a safe place to store extra cash and credit.",
+    //   actions: [
+    //     {
+    //       title: "Bhaskar",
+    //       text: "button1",
+    //       url: "",
+    //     },
+    //     {
+    //       title: "Nandanna",
+    //       text: "button2",
+    //       url: "",
+    //     },
+    //     {
+    //       title: "Dheeraj Anna",
+    //       text: "text",
+    //       url: "https://github.com/Ocrk-git/chatbot",
+    //     },
+    //   ],
+    // },
+    // {
+    //   image:
+    //     "https://i.pinimg.com/originals/39/47/03/394703864ace3f7c7fe232077f7d12f7.jpg",
+    //   title: "Finance",
+    //   description:
+    //     "Using the Hello World guide, you’ll start a branch, write comments, and open a pull request.",
+    //   actions: [
+    //     {
+    //       title: "Dheeraj Anna",
+    //       text: "text",
+    //       url: "https://github.com/Ocrk-git/chatbot",
+    //     },
+    //   ],
+    // },
+    // {
+    //   image: "https://images.unsplash.com/photo-1537996194471-e657df975ab4",
+    //   title: "Insurance",
+    //   description:
+    //     "This is essentially a back/next button positioned correctly. You must implement the textual description yourself, however, an example is provided below for reference.",
+    // },
+    //   ],
+    // },
     // {
     //   messageFrom: "bot",
     //   type: "text",
     //   message: "Hey! Welcome to OCRK. How can I help you today?",
     // },
-
-    {
-      messageFrom: "bot",
-      type: "image",
-      image: "https://images5.alphacoders.com/484/484870.jpg",
-    },
-    {
-      messageFrom: "bot",
-      type: "video",
-      video: "https://cdn.yellowmessenger.com/2yLMUv3B5Tn51620198798115.mp4",
-    },
+    // {
+    //   messageFrom: "bot",
+    //   type: "rating",
+    //   options: {
+    //     value: 5,
+    //   },
+    // },
+    // {
+    //   messageFrom: "bot",
+    //   type: "image",
+    //   image: "https://images5.alphacoders.com/484/484870.jpg",
+    // },
+    // {
+    //   messageFrom: "bot",
+    //   type: "video",
+    //   video: "https://cdn.yellowmessenger.com/2yLMUv3B5Tn51620198798115.mp4",
+    // },
   ],
 };
 

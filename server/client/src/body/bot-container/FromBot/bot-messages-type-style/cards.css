@@ -32,6 +32,8 @@
   padding: 5px 10px;
   font-size: var(--fontSize);
   /* margin: 10px 0; */
+  white-space: pre-wrap;
+
   color: rgb(75, 75, 75);
 }
 

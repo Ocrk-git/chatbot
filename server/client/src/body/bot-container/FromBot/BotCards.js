@@ -22,7 +22,8 @@ SwiperCore.use([Navigation, Pagination, Scrollbar, A11y, Autoplay, Keyboard]);
 
 // install Swiper modules
 
-const BotCards = ({ cards, hide, image }) => {
+const BotCards = ({ cards, hide, image, options }) => {
+  console.log(options, "CARDS OPTIONS");
   const slides = [];
   for (let i = 0; i < cards.length; i++) {
     slides.push(
@@ -55,23 +56,37 @@ const BotCards = ({ cards, hide, image }) => {
         <Swiper
           spaceBetween={10}
           slidesPerView={1}
-          loop={true}
-          autoHeight={true}
+          loop={options.loop ? options.loop : false}
+          autoHeight={options.autoHeight ? options.autoHeight : false}
           keyboard={{
-            enabled: true,
+            enabled: options.keyboardChanging ? options.keyboardChanging : true,
           }}
-          // autoplay={{
-          //   delay: 2500,
-          //   disableOnInteraction: true,
-          // }}
-          pagination={{
-            // el: ".swiper-pagination",
-            // type: "bullets",
-            clickable: true,
-            // dynamicBullets: true,
+          autoplay={
+            options.autoplay
+              ? {
+                  delay: options.autoplay.delay ? options.autoplay.delay : 2500,
+                  disableOnInteraction: options.autoplay.disableOnInteraction
+                    ? options.autoplay.disableOnInteraction
+                    : true,
+                }
+              : false
+          }
+          pagination={
+            cards.length === 1
+              ? false
+              : {
+                  // el: ".swiper-pagination",
+                  // type: "bullets",
+                  clickable: true,
+                  // dynamicBullets: true,
+                }
+          }
+          navigation={cards.length === 1 ? false : true}
+          scrollbar={{
+            draggable: options.scrollbarDraggable
+              ? options.scrollbarDraggable
+              : true,
           }}
-          navigation
-          scrollbar={{ draggable: true }}
           // onSwiper={(swiper) => console.log(swiper)}
           // onSlideChange={() => console.log("slide change")}
         >
