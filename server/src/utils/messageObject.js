@@ -35,10 +35,18 @@ const sendVideo = (message) => {
   };
 };
 
+const sendRating = (message) => {
+  return {
+    type: "rating",
+    options : message,
+  };
+};
+
 module.exports = {
   sendTextMessage,
   sendQuickReply,
   sendCards,
   sendImage,
   sendVideo,
+  sendRating
 };

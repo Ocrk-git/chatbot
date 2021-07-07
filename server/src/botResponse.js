@@ -11,7 +11,6 @@ const { sendTextMessage } = require("./utils/messageObject")
 
 // TODO: 
 // Refactor and reuse code
-
 const botResponse = (userMessage, sender) => {
     return new Promise(async resolve => {
         const app = new App(sender, userMessage)
@@ -34,7 +33,7 @@ const botResponse = (userMessage, sender) => {
                         // console.log("To send Message variable",JSON.stringify(toSendMessage))
                         messageArray.push(...toSendMessage)
                     });
-                    console.log("message array",messageArray)
+                    console.log("message array", messageArray)
                     resolve(messageArray)
                 }
                 catch (e) {
@@ -67,12 +66,13 @@ const botResponse = (userMessage, sender) => {
                                     console.log("Response Object=============================================>", responseObject)
                                     if (responseObject.type == 'intent') {
                                         let context = await getJourneyFlow(responseObject.value)
-                                        console.log("Context variable in trigger intent", context)
+                                        // console.log("Context variable in trigger intent", context)
                                         let currentStep = 0
                                         // client.setex(sender, 3600, JSON.stringify({ 'journey': responseObject.value, context, currentStep }));
                                         const newJourney = true
                                         await app.setContext(sender, { 'journey': responseObject.value, context, currentStep }, newJourney)
                                         //Multiple prompts
+                                        console.log(context.length,"context length before checking")
                                         if (context.length > 1) {
                                             let prompts = context[currentStep]["prompt"]
                                             await asyncForEach(prompts, async (prompt, index) => {
@@ -84,14 +84,14 @@ const botResponse = (userMessage, sender) => {
                                         else {
                                             let responses = context[currentStep]["response"]
                                             await asyncForEach(responses, async (response, index) => {
-                                                const toSendMessage = await sendMessage(response, sender)
+                                                const toSendMessage = await sendMessage(response, sender, app)
                                                 // console.log("To send Message variable",JSON.stringify(toSendMessage))
                                                 messageArray.push(...toSendMessage)
                                             });
                                         }
                                     }
                                     else {
-                                        const toSendMessage = await sendMessage(responseObject, sender)
+                                        const toSendMessage = await sendMessage(responseObject, sender, app)
                                         messageArray.push(...toSendMessage)
                                     }
                                 })
@@ -138,6 +138,7 @@ const botResponse = (userMessage, sender) => {
                             // client.setex(sender, 3600, JSON.stringify({ journey, context, currentStep }))
                             await app.setContext(sender, { journey, context, currentStep })
                             //Multiple prompts
+                            console.log(context, "current step")
                             let prompts = context[currentStep]["prompt"]
                             let messageArray = []
 
