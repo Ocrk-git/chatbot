@@ -5,12 +5,12 @@ const {
     sendQuickReply,
     sendCards,
     sendImage,
-    sendVideo
+    sendVideo,
+    sendRating
 } = require('./messageObject')
 const promptsPath = path.join(__dirname, '../prompts')
 const sendMessage = (prompt, senderId, app) => {
     return new Promise(async resolve => {
-        console.log('prompt from send message', prompt)
         if (prompt.type == "text") {
             resolve([sendTextMessage(prompt.value)])
         }
@@ -27,7 +27,11 @@ const sendMessage = (prompt, senderId, app) => {
         else if (prompt.type == "video") {
             resolve([sendVideo(prompt.url)])
         }
+        else if (prompt.type == "rating") {
+            resolve([sendRating(prompt.value)])
+        }
         else if (prompt.type == "function") {
+            console.log("in prompt type function")
             const promptFunction = require(promptsPath + '/' + prompt['value'])
             const promptResponse = await promptFunction(senderId, app)
             console.log('Prompt response from function--------------------------------------->', promptResponse)

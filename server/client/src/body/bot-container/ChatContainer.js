@@ -65,7 +65,7 @@ const ChatContainer = ({ messages, showBotTyping, homeButtonState }) => {
                 />
               );
             } else if (item.type === "quickReply") {
-              console.log("quickReply Item",item)
+              // console.log("quickReply Item",item)
               return (
                 <BotQuickReplies
                   key={index}
