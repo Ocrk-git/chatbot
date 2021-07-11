@@ -13,9 +13,8 @@ const promptSiteDetails = (senderId) => {
             resolve([sendCards([{
                 "image": "https://cdn.yellowmessenger.com/wGDI4FNpwxk61617085099835.jpeg",
                 "title": "Opening hours",
-                "description": `MON-FRI 9:00 - 6:00<br/>
-SAT-SUN 9:00 - 3:00<br/><br/>
-
+                "description": `MON-FRI 9:00 - 6:00\n
+SAT-SUN 9:00 - 3:00\n
 Address: Childrens Park Rd, Pinakini Avenue,
 Balaji Nagar, Nellore, Andhra Pradesh 524002`
             }])])

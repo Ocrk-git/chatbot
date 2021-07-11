@@ -21,9 +21,9 @@ function App(sender, utterance) {
     })
     this.setContext = (sender, data, newJourney = false) => {
         return new Promise((resolve, reject) => {
-            console.log("data from set context", data)
+            // console.log("data from set context", data)
             client.get(sender, async (err, currentContext) => {
-                console.log("current context", currentContext)
+                // console.log("current context", currentContext)
                 if (err) {
                     console.log("No context found::", err)
                     reject(err)
@@ -36,7 +36,7 @@ function App(sender, utterance) {
                     }
                     else {
                         currentContext = JSON.parse(currentContext)
-                        console.log("current context", currentContext)
+                        // console.log("current context", currentContext)
                         let { contextHistory } = currentContext
                         if (newJourney == false) {
                             await client.setex(this.sender, 3600, JSON.stringify({ ...data, contextHistory }))

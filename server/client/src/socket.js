@@ -8,6 +8,7 @@ import {
   botCards,
   botImage,
   botVideo,
+  botStarRating
 } from "./actions/botMessageActions";
 import { homeButton } from "./actions/userMessageAction";
 import { botTypingMessageAction } from "./actions/botMessageActions";
@@ -24,6 +25,7 @@ const Socket = ({
   homeButton,
   homeButtonClick,
   botTypingMessageAction,
+  botStarRating
 }) => {
   const endPoint = "http://localhost:5000";
   // console.log("executing socket component");
@@ -92,9 +94,12 @@ const Socket = ({
                 } else if (messages[i].type === "image") {
                   await botImage(messages[i]);
                 } else if (messages[i].type === "video") {
-                  console.log("Message",messages[i])
                   await botVideo(messages[i]);
-                } else {
+                }
+                else if (messages[i].type === "rating") {
+                  await botStarRating(messages[i]);
+                }
+                else {
                   return null;
                 }
               },
@@ -138,4 +143,5 @@ export default connect(mapStateToProps, {
   botVideo,
   homeButton,
   botTypingMessageAction,
+  botStarRating
 })(Socket);

@@ -6,21 +6,23 @@ const {
     sendImage,
     sendVideo
 } = require('../utils/messageObject')
-const context = (senderId) => {
-    return new Promise(resolve =>{
+const context = (senderId, app) => {
+    return new Promise(resolve => {
         client.get(senderId, (error, result) => {
             if (error) {
                 resolve(error)
             }
             else {
-                result = JSON.parse(result)
-                const rating = result['context'].find((step)=>{
-                    if(step.stepName = 'ask-feedback'){
-                        return step.stepValue
-                    }
-                })
-                let response =''
-                if(rating > 4){
+                // result = JSON.parse(result)
+                // console.log("result from redis", result)
+                // const rating = result['context'].find((step) => {
+                //     if (step.stepName = 'ask-feedback') {
+                //         return step.stepValue
+                //     }
+                // })
+                let rating = app.data.message
+                let response = ''
+                if (rating > 4) {
                     response = "Thanks! we are glad you had a Great experience 😊"
                 }
                 else {

@@ -27,7 +27,7 @@ const Banner = ({ toggle, image }) => {
 
       <InputContainer />
       {/* powerd by  */}
-      {/* <PoweredBy /> */}
+      <PoweredBy />
       <QuickActions />
     </div>
   );
