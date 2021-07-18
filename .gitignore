@@ -5,3 +5,7 @@ package-lock.json
 __pycache__
 config.pth
 dump.rdb
+server/src/nlp/__pycache__/cnn_model.cpython-37.pyc
+server/src/nlp/__pycache__/nlp_utils.cpython-37.pyc
+server/src/nlp/__pycache__/prediction_helper.cpython-37.pyc
+__pycache__
