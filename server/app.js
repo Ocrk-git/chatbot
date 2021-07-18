@@ -133,7 +133,7 @@ io.on("connection", async (socket) => {
   //sending default message
 
   socket.on("ocrk_home", () => {
-    console.log("default message");
+    // console.log("default message");
     try {
       client.del(sender);
       console.log(`Deleting context for sender ${sender}`);
